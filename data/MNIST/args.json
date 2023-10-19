@@ -1,1 +1,0 @@
-{"dataset": null, "num_client": 10, "iid": 0, "balance": 1, "partition": "pat", "alpha": 0.1, "num_class_client": 3, "least_samples": 40, "train_size": 0.8}
