@@ -1,0 +1,11 @@
+{
+    "info": "args loaded from this file",
+
+    "niid":true,
+    "balance":true,
+    "partition": "pat",
+
+    "train_size": 0.75,
+    "alpha": 0.1,
+    "num_class_client": 4
+}
