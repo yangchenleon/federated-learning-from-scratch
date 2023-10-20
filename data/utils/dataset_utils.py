@@ -1,11 +1,8 @@
 import os, json, pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from torchvision import transforms
-from argparse import ArgumentParser
-from schemes import iid_partition, dirichlet, pathological
-from datasets import DatasetDict, CustomSubset
-from setting import par_dict, data_dict
+
+from .schemes import iid_partition, dirichlet, pathological
 
 def partition_data(dataset, args):
     '''
@@ -53,6 +50,9 @@ def split_data(partition, train_size=0.8):
     return partition
 
 def save_partition(partition, stats, args, path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
     with open(os.path.join(path, "partition.pkl"), "wb") as f:
         pickle.dump(partition, f)
 
@@ -67,6 +67,7 @@ def draw_distribution(dataset,  partition):
     name_class = dataset.classes
     num_client = len(partition)
     num_class = len(name_class)
+    partition = [partition[i]['train'] for i in range(num_client)]
 
     plt.figure(figsize=(12, 8))
     label_distribution = [[] for _ in range(num_class)]
@@ -84,29 +85,3 @@ def draw_distribution(dataset,  partition):
     plt.title("Display Label Distribution on Different Clients")
     plt.show()
 
-if __name__ == "__main__":
-    np.random.seed(42)
-    parser = ArgumentParser()
-    parser.add_argument('-d', '--dataset', type=str, choices=['minst'])
-    parser.add_argument('-n', '--num_client', type=int, default=10)
-    parser.add_argument('--iid', type=int, default=0)
-    parser.add_argument('--balance', type=int, default=1)
-    parser.add_argument('--partition', type=str, choices=['pat', 'dir', 'mix'], default='pat')
-    parser.add_argument('-a', '--alpha', type=float, default=0.1)
-    parser.add_argument('-nc', '--num_class_client', type=int, default=3)
-    parser.add_argument('-ls', '--least_samples', type=int, default=40)
-    parser.add_argument('-ts', '--train_size', type=float, default=0.8)
-    args = parser.parse_args()
-
-    dataset_name = 'mnist'
-    transform = transforms.Compose([transforms.ToTensor(),
-                                    transforms.Normalize([0.5], [0.5])])
-    dataset = DatasetDict[dataset_name](root=data_dict[dataset_name], transform=transform)
-
-    partition, stats = partition_data(dataset, args)
-    save_partition(partition, stats, args, path=par_dict[dataset_name])
-    # draw_distribution(dataset, partition)
-    with open(os.path.join(par_dict[dataset_name], 'partition.pkl'), "rb") as f:
-        partition = pickle.load(f)
-    trainset = CustomSubset(dataset, partition[0]['train'])
-    print(trainset.data.shape)
