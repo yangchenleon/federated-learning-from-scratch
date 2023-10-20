@@ -2,6 +2,8 @@ import os, json, pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
+from .datasets import DatasetDict
+from .setting import data_dict
 from .schemes import iid_partition, dirichlet, pathological
 
 def partition_data(dataset, args):
@@ -11,6 +13,7 @@ def partition_data(dataset, args):
     partition: two options['pat': pathologic, 'dir': Dirichlet, 'mix': mix]
     1. if niid, partion is useless. 2. if partition is dir, balance is useless.
     '''
+    dataset = DatasetDict[dataset](root=data_dict[dataset], transform=None)
     labels = dataset.targets
     num_client, iid, balance, partition, alpha, num_class_client, least_samples = args.num_client, args.iid, args.balance, args.partition, args.alpha, args.num_class_client, args.least_samples
     

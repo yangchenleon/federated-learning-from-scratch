@@ -1,11 +1,13 @@
 data_dict = {
     'mnist': 'data/datasets',
     'fashion': 'data/datasets',
+    'cifar10': 'data/datasets/CIFAR10/raw'
 }
-
+base = 'data/partition/'
 par_dict = {
-    'mnist': 'data/partition/MNIST',
-    'fashion': 'data/partition/FashionMNIST',
+    'mnist': base + 'MNIST',
+    'fashion': base + 'FashionMNIST',
+    'cifar10': base + 'CIFAR10',
 }
 
 data_info = {

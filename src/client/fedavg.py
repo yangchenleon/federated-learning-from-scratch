@@ -1,6 +1,7 @@
 import os, pickle, sys
 import torch
 from tqdm import tqdm
+from torch.utils.data.dataset import Subset
 
 sys.path.append('')
 from data.utils.datasets import DatasetDict, CustomSubset
@@ -58,6 +59,9 @@ class Client(object):
             shuffle=True, 
             # num_workers=self.args.num_workers
         )
+        # only in customsubse and in uint8, use [index] to apply transform
+        print(self.trainset.data.shape, self.trainset.data.dtype)
+        print(next(iter(self.trainloader))[0].shape, next(iter(self.trainloader))[0].dtype)
         return self.trainset, self.testset
     
     def train(self, num_epochs):
@@ -81,4 +85,4 @@ class Client(object):
         with torch.no_grad():
             preds = self.model(X).argmax(axis=1)
         
-        print(preds, f'{sum(preds==y)/len(y):2f}')
+        print(f'{sum(preds==y)/len(y):2f}')
