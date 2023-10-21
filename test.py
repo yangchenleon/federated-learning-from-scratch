@@ -8,11 +8,6 @@ from data.utils.setting import par_dict, data_dict
 from data.utils.dataset_utils import partition_data, save_partition, draw_distribution
 from src.client.fedavg import Client
 
-from src.models.models import ModelDict
-from torch import nn, optim
-from tqdm import tqdm
-from torch.utils.data import DataLoader
-
 if __name__ == "__main__":
     np.random.seed(42)
     parser = ArgumentParser()
@@ -31,21 +26,24 @@ if __name__ == "__main__":
     parser.add_argument("-wd", "--weight_decay", type=float, default=0.0)
     parser.add_argument("-bs", "--batch_size", type=int, default=256)
     parser.add_argument("-mom", "--momentum", type=float, default=0.0)
+    parser.add_argument("-ne", "--num_epochs", type=int, default=40)
     args = parser.parse_args()
 
-    dataset_name, model_name = 'cifar10', 'alexnet'
+    dataset_name, model_name = 'mnist', 'alexnet'
     # partition, stats = partition_data(dataset_name, args)
     # save_partition(partition, stats, args, path=par_dict[dataset_name])
     # draw_distribution(dataset, partition)
-    with open(os.path.join(par_dict[dataset_name], 'partition.pkl'), "rb") as f:
-        partition = pickle.load(f)
+    # with open(os.path.join(par_dict[dataset_name], 'partition.pkl'), "rb") as f:
+    #     partition = pickle.load(f)
     
-    trans = transforms.Compose([transforms.ToTensor(),
-                                transforms.Normalize([0.5], [0.5]),
-                                transforms.Resize(224, antialias=True),
-                                transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])])
-    client = Client(0, dataset_name, model_name, args, None, 'cpu')
+    trans = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Resize(224, antialias=True),
+        transforms.Normalize([0.5], [0.5]),
+        # transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])
+    ])
+    client = Client(0, dataset_name, model_name, args, None, 'cuda')
     trainset, testset = client.load_dataset(transform=trans)
-    client.train(10)
-    client.save_state('result/checkpoint/')
+    client.train('results/checkpoints/0_cifar10_AlexNet_30.pth')
+    client.load_state('results/checkpoints/0_mnist_AlexNet_40.pth')
     client.eval()

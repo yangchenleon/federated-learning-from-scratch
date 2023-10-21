@@ -33,8 +33,8 @@ class MLP(nn.Module):
 class AlexNet(nn.Module):
     def __init__(self, dataset):
         super(AlexNet, self).__init__()
-        input_dim = data_info[dataset][0]
-        output_dim = data_info[dataset][2]
+        input_dim, output_dim = data_info[dataset][0], data_info[dataset][2]
+        input_dim = 3
         self.features = nn.Sequential(
             nn.Conv2d(input_dim, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
