@@ -1,13 +1,17 @@
 class MyClass:
     def __init__(self, name):
         self.dataset = name
+        # self.para1 = None
 
-    def my_method(self):
+    def my_method(self, para1):
         dataset = "Method dataset"
-        print(dataset)  # 输出: Method dataset
+        self.para1 = para1
+        # print(dataset)  # 输出: Method dataset
 
-        # 使用类变量
-        print(self.dataset)  # 输出: Original dataset
+        # # 使用类变量
+        # print(self.dataset)  # 输出: Original dataset
+    def printextra(self):
+        print(self.para1)
 
 class SonClass(MyClass):
     def __init__(self, name, age):
@@ -23,6 +27,10 @@ obj = SonClass('666', 2323)
 
 # 调用方法
 # obj.fuck()
+
+obj = MyClass('suck')
+obj.my_method('duck')
+obj.printextra()
 
 # ------------------------------------
 import torch
@@ -198,11 +206,40 @@ a = np.array([[[
     [  0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
     0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
     0.,   0.,   0.,   0.,   0.,   0.]]]], dtype=np.uint8)
-print(a.dtype, a.shape)
-b = transforms.ToTensor()(a)
-print(b.dtype, b.shape)
+# print(a.dtype, a.shape)
+# b = transforms.ToTensor()(a)
+# print(b.dtype, b.shape)
 
 # ------------------------------------
 # import torchvision
 # testset = torchvision.datasets.CIFAR10('data/datasets/CIFAR10/raw', train=False, download=True)
 # print(torch.Tensor(testset.data).shape)
+
+# ------------------------------------
+import numpy as np
+from sklearn.metrics import roc_auc_score
+from sklearn.preprocessing import label_binarize
+import torch.nn.functional as F
+# y_true = np.array([0, 0, 1, 1])
+# y_predprob =np.array([[0.9,0.1],[0.6,0.4],[0.65,0.35],[0.2,0.8]])
+# trues, preds = [], []
+
+# trues.append(F.one_hot(torch.tensor(y_true, dtype=torch.int64), num_classes=2).numpy())
+# preds.append(y_predprob)
+# print(preds, trues)
+# # preds, trues = np.concatenate(preds), np.concatenate(trues)
+# # print(preds, trues)
+# auc = roc_auc_score(trues, preds, average='micro')
+# print(auc)#0.75
+
+# ------------------------------------
+# print(np.concatenate([np.array([[0.9 , 0.1 ],
+#        [0.6 , 0.4 ],
+#        [0.65, 0.35],
+#        [0.2 , 0.8 ]]),
+#        np.array([[0.9 , 0.1 ],
+#        [0.6 , 0.4 ],
+#        [0.65, 0.35],
+#        [0.2 , 0.8 ]])] ,axis=0))
+
+# ------------------------------------

@@ -25,9 +25,10 @@ class MLP(nn.Module):
     
     @staticmethod
     def init_weights(self):
-        for m in self.modules():
-            if isinstance(m, nn.Linear):
-                nn.init.normal_(m.weight, std=0.01)
+        for layer in self.modules():
+            if isinstance(layer, nn.Linear) or isinstance(layer, nn.Conv2d):
+                nn.init.normal_(layer.weight, std=0.01)
+                # nn.init.xavier_normal_(layer.weight.data)
 
 class AlexNet(nn.Module):
     def __init__(self, dataset):

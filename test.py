@@ -8,7 +8,7 @@ from data.utils.setting import par_dict, data_dict
 from data.utils.dataset_utils import partition_data, save_partition, draw_distribution
 from src.client.fedavg import Client
 
-from models.models import ModelDict
+from src.models.models import ModelDict
 from torch import nn, optim
 from tqdm import tqdm
 from torch.utils.data import DataLoader
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument('-ts', '--train_size', type=float, default=0.8)
 
     # mlp: 0.1, alexnet: 0.01
-    parser.add_argument('-lr', '--lr', type=float,  default=1e-1)
+    parser.add_argument('-lr', '--lr', type=float,  default=1e-2)
     parser.add_argument("-wd", "--weight_decay", type=float, default=0.0)
     parser.add_argument("-bs", "--batch_size", type=int, default=256)
     parser.add_argument("-mom", "--momentum", type=float, default=0.0)
@@ -42,8 +42,10 @@ if __name__ == "__main__":
     
     trans = transforms.Compose([transforms.ToTensor(),
                                 transforms.Normalize([0.5], [0.5]),
-                                torchvision.transforms.Resize(224, antialias=True)])
+                                transforms.Resize(224, antialias=True),
+                                transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])])
     client = Client(0, dataset_name, model_name, args, None, 'cpu')
     trainset, testset = client.load_dataset(transform=trans)
     client.train(10)
+    client.save_state('result/checkpoint/')
     client.eval()
