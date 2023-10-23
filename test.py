@@ -31,10 +31,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset_name, model_name = 'cifar10', 'resnet18'
-    # partition, stats = partition_data(dataset_name, args)
+    partition, stats = partition_data(dataset_name, args)
     # save_partition(partition, stats, args, path=par_dict[dataset_name])
-    # draw_distribution(dataset_name, partition)
-    
+    draw_distribution(dataset_name, partition)
+    exit()
     trans = transforms.Compose([
         transforms.ToTensor(),
         transforms.Resize(224, antialias=True),

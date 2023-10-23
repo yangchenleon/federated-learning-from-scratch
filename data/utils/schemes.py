@@ -36,6 +36,14 @@ def dirichlet(dataset, num_client, alpha):
     return idx_sample_client
 
 def pathological(dataset, num_client, num_class_client, balance, least_samples):
+    '''
+    some problem with partion when num_client * num_class_clinet < num_class
+    try num_class_client = max(int(np.ceil(num_class/num_client)), num_class_client)
+    but without it still work, because the num_select is always 1, same effect as above.
+    beside tried available_client, but seem can't set all client have same num_class_client
+    it is useless while it may bring more trouble, so just leave it.
+    and the implementation is not good, seems some class can never meet in a same client, not sure, can't statisticly prove it.
+    '''
     labels = dataset.targets
     num_class = len(dataset.classes)
     idx_sample_client = [[] for _ in range(num_client)]
@@ -48,24 +56,21 @@ def pathological(dataset, num_client, num_class_client, balance, least_samples):
     
     idx_client = np.array(range(num_client))
     cnt_class_client = np.array([num_class_client for _ in range(num_client)])
-    available_client = np.array(range(num_client))
+    # All the data is divided into num_client * class_per_client shards, with each class evenly distributed among these shards (dividing them by num_class). The number of shards in class corresponds to the number of clients selcected.
+    # ceil出现的问题是，最后一个类别的shard client数量不够，一个class n个shard但只有<n个分，造成部分client多；而floor是过早分配完，部分client的shard不够，如果不要求所有客户类数量一样的可以选择，差不了多少
+    num_select = int(np.ceil((num_client/num_class)*num_class_client))
 
     for i in range(num_class):
         # choose client for class i and update client list
-        num_select = int(np.ceil((num_client/num_class)*num_class_client))
-
-        # All the data is divided into num_client * class_per_client shards, with each class evenly distributed among these shards (dividing them by num_class). The number of shards in class corresponds to the number of clients selcected.
         pri_selected_client = idx_client[cnt_class_client==max(cnt_class_client)]
-
         # to supportclass_per_client > 2 
-        if pri_selected_client.size >= num_select:
+        if len(pri_selected_client) >= num_select:
             selected_client = np.random.choice(pri_selected_client, num_select, replace=False)
         else:
-            restavai_client = np.setdiff1d(available_client, pri_selected_client)
+            restavai_client = np.setdiff1d(idx_client, pri_selected_client)
             aft_selected_client = np.random.choice(restavai_client, num_select-len(pri_selected_client), replace=False)
             selected_client = np.concatenate((pri_selected_client, aft_selected_client))
         cnt_class_client[selected_client] -= 1
-        available_client = idx_client[cnt_class_client>0]
 
         # now we have selected clients and data(sample) of class i
         idx_sample = label2idx[i]
