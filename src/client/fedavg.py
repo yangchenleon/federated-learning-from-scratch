@@ -25,19 +25,21 @@ class Client(object):
         self.logger = logger
         self.id = client_id
         self.dataset = dataset
-        self.model = ModelDict[model](dataset).to(device)
+        
 
         self.trainset = None
         self.trainset = None
         self.trainloader = None
         self.testloader = None
         
+        self.model = ModelDict[model](
+            dataset, pretrained=self.args.pretrained
+        ).to(device)
         self.optimizer = torch.optim.SGD(
             self.model.parameters(), 
             lr=args.lr, 
             momentum=args.momentum, 
-            weight_decay=args.weight_decay
-        )
+            weight_decay=args.weight_decay)
         self.criterion = torch.nn.CrossEntropyLoss()
 
     def load_dataset(self, transform=None, target_transform=None):
@@ -76,7 +78,7 @@ class Client(object):
         if startckpt is not None:
             start = self.load_state(startckpt)
         for epoch in range(start, end):
-            ls, acc = 0, 0
+            num_sample, ls, acc = 0, 0, 0
             # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
             for X, y in tqdm(self.trainloader):
                 X, y = X.to(self.device), y.to(self.device)
@@ -88,7 +90,8 @@ class Client(object):
 
                 acc += (torch.argmax(output.detach(), dim=1) == y).sum()
                 ls += loss.item() * y.size(0)
-            print(f'epoch:{epoch+1}  train loss:{ls/len(self.trainset):.3f}, train accuracy:{acc/len(self.trainset)*100:.2f}%')
+                num_sample += len(y) # same as y.size(0), y.shape[0]
+            print(f'epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
         if save:
             self.save_state(save_base)
             
@@ -121,7 +124,7 @@ class Client(object):
         return acc, auc
     
     def save_state(self, path):
-        ckpt_name = f"{self.id}_{self.dataset}_{self.model.__class__.__name__}_{self.args.num_epochs}.pth"
+        ckpt_name = f"{self.id}_{self.model.__class__.__name__}{'_ptd_' if self.args.pretrained else '_'}{self.dataset}_{self.args.num_epochs}.pth"
 
         torch.save({
             'trained_epoch': self.args.num_epochs,

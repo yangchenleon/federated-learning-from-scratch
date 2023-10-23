@@ -2,12 +2,14 @@ import os
 os.environ['TORCH_HOME']='results/pretrained/'
 import torch, torchvision
 import torch.nn as nn
+import torch.nn.functional as F
 from data.utils.setting import data_info
 
 
 class MLP(nn.Module):
-    def __init__(self, dataset):
+    def __init__(self, dataset, pretrained):
         super(MLP, self).__init__()
+        pretrained = False
         input_dim = data_info[dataset][0] * data_info[dataset][1]
         output_dim = data_info[dataset][2]
         self.flat = nn.Flatten()
@@ -34,10 +36,11 @@ class MLP(nn.Module):
                 # nn.init.xavier_normal_(layer.weight.data)
 
 class PerAlexNet(nn.Module):
-    def __init__(self, dataset):
-        super(AlexNet, self).__init__()
+    def __init__(self, dataset, pretrained):
+        super(PerAlexNet, self).__init__()
         input_dim = data_info[dataset][0]
         output_dim = data_info[dataset][2]
+        pretrained = False
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
@@ -73,16 +76,22 @@ class PerAlexNet(nn.Module):
         return x
 
 class AlexNet(nn.Module):
-    def __init__(self, dataset):
+    def __init__(self, dataset, pretrained=False):
         input_dim = data_info[dataset][0] * data_info[dataset][1]
         output_dim = data_info[dataset][2]
         super(AlexNet, self).__init__()
         self.base = torchvision.models.alexnet(
-            weights=torchvision.models.AlexNet_Weights.DEFAULT)
+            weights=torchvision.models.AlexNet_Weights.DEFAULT if pretrained else None
+        )
         self.classifier = nn.Linear(
             self.base.classifier[-1].in_features, output_dim
         )
         self.base.classifier[-1] = nn.Identity()
+
+        # self.model = torchvision.models.alexnet(
+        #     weights=torchvision.models.AlexNet_Weights.DEFAULT if pretrained else None,
+        #     num_classes = output_dim
+        # )
 
     def forward(self, x):
         x = self.base(x)
@@ -92,5 +101,5 @@ class AlexNet(nn.Module):
 ModelDict = {
     'mlp': MLP,
     'alexnet': AlexNet,
-    'peralexnet': PerAlexNet, 
+    'peralex': PerAlexNet, 
 }
