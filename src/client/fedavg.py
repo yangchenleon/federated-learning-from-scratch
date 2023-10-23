@@ -1,16 +1,17 @@
-import os, pickle, sys
+import os, pickle, sys, json
 import torch
 import numpy as np
 from tqdm import tqdm
 from sklearn import metrics
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 sys.path.append('')
 from data.utils.datasets import DatasetDict, CustomSubset
 from src.models.models import ModelDict
 from data.utils.setting import par_dict, data_dict
 
-save_base = 'results/checkpoints/'
+save_base = 'results/'
 
 class Client(object):
     '''
@@ -26,7 +27,6 @@ class Client(object):
         self.id = client_id
         self.dataset = dataset
         
-
         self.trainset = None
         self.trainset = None
         self.trainloader = None
@@ -42,12 +42,15 @@ class Client(object):
             weight_decay=args.weight_decay)
         self.criterion = torch.nn.CrossEntropyLoss()
 
+        self.learn_curve = []
+        self.shared_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
+
     def load_dataset(self, transform=None, target_transform=None):
         '''
         default data_path is fixed in datasets, only set partition dir
         read partition and load train/test dataset
         '''
-        dataset = DatasetDict[self.dataset](root=data_dict[self.dataset], transform=transform, target_transform=target_transform)
+        dataset = DatasetDict[self.dataset](root=data_dict[self.dataset],transform=transform, target_transform=target_transform)
         with open(os.path.join(par_dict[self.dataset], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
         self.trainset = CustomSubset(dataset, partition[self.id]['train'])
@@ -77,6 +80,8 @@ class Client(object):
         start, end = 0, self.args.num_epochs
         if startckpt is not None:
             start = self.load_state(startckpt)
+            with open(save_base + f"/curves/_{start}.json", 'r') as f:
+                self.learn_curve = json.load(f)
         for epoch in range(start, end):
             num_sample, ls, acc = 0, 0, 0
             # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
@@ -88,12 +93,14 @@ class Client(object):
                 loss.backward()
                 self.optimizer.step()
 
-                acc += (torch.argmax(output.detach(), dim=1) == y).sum()
+                acc += (torch.argmax(output.detach(), dim=1) == y).sum().item()
                 ls += loss.item() * y.size(0)
                 num_sample += len(y) # same as y.size(0), y.shape[0]
+            
+                self.learn_curve.append((ls/num_sample, acc/num_sample*100))
             print(f'epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
         if save:
-            self.save_state(save_base)
+            self.save_state()
             
         # return self.model.state_dict()
     def eval(self):
@@ -123,14 +130,25 @@ class Client(object):
         
         return acc, auc
     
-    def save_state(self, path):
-        ckpt_name = f"{self.id}_{self.model.__class__.__name__}{'_ptd_' if self.args.pretrained else '_'}{self.dataset}_{self.args.num_epochs}.pth"
+    def save_state(self):
+        # ckpt_base = os.path.join(path, 'checkpoints')
+        # curve_base = os.path.join(path, 'curve')
+        # if os.path.exists(ckpt_base) is False:
+        #     os.makedirs(ckpt_base)
+        # if os.path.exists(curve_base) is False:
+        #     os.makedirs(curve_base)
+
+        ckpt_name = self.shared_midname + f'_{self.args.num_epochs}.pth'
+        log_name = self.shared_midname + f'_{self.args.num_epochs}.json'
 
         torch.save({
             'trained_epoch': self.args.num_epochs,
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
-            }, path + ckpt_name)
+            }, save_base+'/checkpoints/'+ckpt_name)
+
+        with open(save_base+'/curves/'+log_name, 'w') as f:
+            json.dump(self.learn_curve, f)
     
     def load_state(self, ckptfile):
         ckpt = torch.load(ckptfile)
@@ -140,3 +158,26 @@ class Client(object):
         self.model.eval()
 
         return ckpt['trained_epoch']
+
+    def draw_curve(self):
+        with open(save_base + f"/curves/"+self.shared_midname+f"_{self.args.num_epochs}.json", 'r') as f:
+            self.learn_curve = json.load(f)
+        train_loss, train_acc = zip(*self.learn_curve)
+        fig, ax1 = plt.subplots()
+        ax1.plot(train_loss, 'r-', label='train_loss')
+        ax1.set_xlabel('X')
+        ax1.set_ylabel('loss', color='r')
+        ax1.tick_params('y', colors='r')
+        ax2 = ax1.twinx()
+
+        # 绘制第二个y轴对应的数据
+        ax2.plot(train_acc, 'b-', label='train_acc')
+        ax2.set_ylabel('accuracy', color='b')
+        ax2.tick_params('y', colors='b')
+
+        lines = ax1.get_lines() + ax2.get_lines()
+        ax1.legend(lines, [line.get_label() for line in lines])
+        plt.savefig("results/figures/1.jpg")
+        plt.show()
+        
+        

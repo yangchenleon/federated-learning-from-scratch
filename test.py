@@ -23,19 +23,17 @@ if __name__ == "__main__":
 
     # mlp: 0.1, alexnet: 0.01
     parser.add_argument('-pt', '--pretrained', type=int, default=1)
-    parser.add_argument('-lr', '--lr', type=float,  default=1e-4)
+    parser.add_argument('-lr', '--lr', type=float,  default=1e-3)
     parser.add_argument("-wd", "--weight_decay", type=float, default=0.0)
     parser.add_argument("-bs", "--batch_size", type=int, default=256)
     parser.add_argument("-mom", "--momentum", type=float, default=0.0)
     parser.add_argument("-ne", "--num_epochs", type=int, default=5)
     args = parser.parse_args()
 
-    dataset_name, model_name = 'cifar10', 'alexnet'
+    dataset_name, model_name = 'cifar10', 'resnet18'
     # partition, stats = partition_data(dataset_name, args)
     # save_partition(partition, stats, args, path=par_dict[dataset_name])
-    # draw_distribution(dataset, partition)
-    # with open(os.path.join(par_dict[dataset_name], 'partition.pkl'), "rb") as f:
-    #     partition = pickle.load(f)
+    # draw_distribution(dataset_name, partition)
     
     trans = transforms.Compose([
         transforms.ToTensor(),
@@ -47,12 +45,11 @@ if __name__ == "__main__":
     trainset, testset = client.load_dataset(transform=trans)
 
     client.trainloader = client.trainloader if torch.cuda.is_available() else torch.utils.data.DataLoader(CustomSubset(trainset, range(100)), batch_size=16, shuffle=False) 
-
     client.train()
-    # client.load_state('results/checkpoints/0_mnist_AlexNet_40.pth')
+    # client.load_state('results/checkpoints/0_AlexNet_cifar10_.pth')
     client.eval()
+    client.draw_curve()
 
-    # 更新一下partition的读取问题
-    # 训练过程、预测结果可视化
+    # log，即各种参数设置
     # 中间特征输出
-    # 有点偏：训练一半minst跑去训练cifar10，很怪但是想实现这个log
+    # 有点偏：训练一半minst跑去训练cifar10，很怪但是想实现这个log —— optional

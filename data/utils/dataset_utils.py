@@ -66,6 +66,7 @@ def save_partition(partition, stats, args, path):
         json.dump(vars(args), f)
     
 def draw_distribution(dataset,  partition):
+    dataset = DatasetDict[dataset](root=data_dict[dataset], transform=None)
     labels = dataset.targets
     name_class = dataset.classes
     num_client = len(partition)

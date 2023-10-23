@@ -96,10 +96,26 @@ class AlexNet(nn.Module):
     def forward(self, x):
         x = self.base(x)
         x = self.classifier(x)
-        return x   
+        return x
+
+class ResNet18(nn.Module):
+    def __init__(self, dataset, pretrained=False):
+        super(ResNet18, self).__init__()
+        output_dim = data_info[dataset][2]
+        self.base = torchvision.models.resnet18(
+            weights=torchvision.models.ResNet18_Weights.DEFAULT if pretrained else None
+        )
+        self.classifier = nn.Linear(self.base.fc.in_features, output_dim)
+        self.base.fc = nn.Identity()
+    
+    def forward(self, x):
+        x = self.base(x)
+        x = self.classifier(x)
+        return x
 
 ModelDict = {
     'mlp': MLP,
     'alexnet': AlexNet,
+    'resnet18': ResNet18,
     'peralex': PerAlexNet, 
 }
