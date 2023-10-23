@@ -2,12 +2,6 @@ import os
 import torch
 import pynvml
 import numpy as np
-from src.models.models import MLP, AlexNet
-
-ModelDict = {
-    'mlp': MLP,
-    'alexnet': AlexNet
-}
 
 def get_best_device(use_cuda: bool) -> torch.device:
     """Dynamically select the vacant CUDA device for running FL experiment.

@@ -33,8 +33,8 @@ if __name__ == "__main__":
     dataset_name, model_name = 'cifar10', 'resnet18'
     partition, stats = partition_data(dataset_name, args)
     # save_partition(partition, stats, args, path=par_dict[dataset_name])
-    draw_distribution(dataset_name, partition)
-    exit()
+    # draw_distribution(dataset_name, partition)
+    # exit()
     trans = transforms.Compose([
         transforms.ToTensor(),
         transforms.Resize(224, antialias=True),
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     client.train()
     # client.load_state('results/checkpoints/0_AlexNet_cifar10_.pth')
     client.eval()
-    client.draw_curve()
+    # client.draw_curve()
 
     # log，即各种参数设置
     # 中间特征输出

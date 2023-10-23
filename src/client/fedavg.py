@@ -6,12 +6,10 @@ from sklearn import metrics
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
-sys.path.append('')
 from data.utils.datasets import DatasetDict, CustomSubset
 from src.models.models import ModelDict
 from data.utils.setting import par_dict, data_dict
-
-save_base = 'results/'
+from src.utils.setting import curve_dir, state_dir, figure_dir
 
 class Client(object):
     '''
@@ -32,6 +30,7 @@ class Client(object):
         self.trainloader = None
         self.testloader = None
         
+        self.trained_epoch = 0
         self.model = ModelDict[model](
             dataset, pretrained=self.args.pretrained
         ).to(device)
@@ -43,7 +42,7 @@ class Client(object):
         self.criterion = torch.nn.CrossEntropyLoss()
 
         self.learn_curve = []
-        self.shared_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
+        self.file_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
 
     def load_dataset(self, transform=None, target_transform=None):
         '''
@@ -77,12 +76,11 @@ class Client(object):
 
     def train(self, startckpt=None, save=True):
         self.model.train()
-        start, end = 0, self.args.num_epochs
         if startckpt is not None:
-            start = self.load_state(startckpt)
-            with open(save_base + f"/curves/_{start}.json", 'r') as f:
+            self.load_state(startckpt)
+            with open(curve_dir+self.file_midname+f"_{self.trained_epoch}.json", 'r') as f:
                 self.learn_curve = json.load(f)
-        for epoch in range(start, end):
+        for epoch in range(self.trained_epoch, self.args.num_epochs):
             num_sample, ls, acc = 0, 0, 0
             # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
             for X, y in tqdm(self.trainloader):
@@ -131,36 +129,38 @@ class Client(object):
         return acc, auc
     
     def save_state(self):
-        # ckpt_base = os.path.join(path, 'checkpoints')
-        # curve_base = os.path.join(path, 'curve')
-        # if os.path.exists(ckpt_base) is False:
-        #     os.makedirs(ckpt_base)
-        # if os.path.exists(curve_base) is False:
-        #     os.makedirs(curve_base)
-
-        ckpt_name = self.shared_midname + f'_{self.args.num_epochs}.pth'
-        log_name = self.shared_midname + f'_{self.args.num_epochs}.json'
-
         torch.save({
             'trained_epoch': self.args.num_epochs,
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
-            }, save_base+'/checkpoints/'+ckpt_name)
+            }, state_dir+self.file_midname+f'_{self.args.num_epochs}.pth')
 
-        with open(save_base+'/curves/'+log_name, 'w') as f:
+        with open(curve_dir+self.file_midname+f'_{self.args.num_epochs}.json', 'w') as f:
             json.dump(self.learn_curve, f)
     
     def load_state(self, ckptfile):
         ckpt = torch.load(ckptfile)
         self.model.load_state_dict(ckpt['model_state_dict'])
         self.optimizer.load_state_dict(ckpt['optimizer_state_dict'])
+        self.trained_epoch = ckpt['trained_epoch']
         # print(f'loading checkpoint!')
         self.model.eval()
 
-        return ckpt['trained_epoch']
+        return ckpt['model_state_dict']
+    
+    def upload(self):
+        # 1. with parameters()
+        # return self.model.parameters() # iterate layer, .data to get tensor
+        # 2. with state_dict()
+        parameters, keys = [], [] # keys is acutally useless
+        for name, param in self.model.state_dict(keep_vars=True).items(): # in case need gradient
+            if param.requires_grad:
+                parameters.append(param.detach().clone()) # .data equal to .detach()
+                keys.append(name)
+        return self.id, parameters, len(self.trainset)
 
     def draw_curve(self):
-        with open(save_base + f"/curves/"+self.shared_midname+f"_{self.args.num_epochs}.json", 'r') as f:
+        with open(curve_dir+self.file_midname+f'_{self.args.num_epochs}.json', 'r') as f:
             self.learn_curve = json.load(f)
         train_loss, train_acc = zip(*self.learn_curve)
         fig, ax1 = plt.subplots()
@@ -177,7 +177,7 @@ class Client(object):
 
         lines = ax1.get_lines() + ax2.get_lines()
         ax1.legend(lines, [line.get_label() for line in lines])
-        plt.savefig("results/figures/1.jpg")
+        plt.savefig(figure_dir + self.file_midname+f'_{self.args.num_epochs}.jpg')
         plt.show()
-        
+    
         

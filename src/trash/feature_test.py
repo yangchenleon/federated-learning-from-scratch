@@ -243,3 +243,35 @@ import torch.nn.functional as F
 #        [0.2 , 0.8 ]])] ,axis=0))
 
 # ------------------------------------
+# import random
+# print([random.sample(range(10), 2) for _ in range(5)])
+
+# ------------------------------------
+import torch.nn as nn
+class MLP(nn.Module):
+    def __init__(self):
+        super(MLP, self).__init__()
+        self.flat = nn.Flatten()
+        self.relu = nn.ReLU()
+        self.fc1 = nn.Linear(28*28, 256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, 10)
+    
+    def forward(self, x):
+        # x = x.view(x.size(0), -1)
+        x = self.flat(x)
+        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc2(x))
+        x = self.fc3(x)
+        
+        return x
+    
+model = MLP()
+print(isinstance(model, nn.Module))
+print(len(list(model.parameters())), len(list(model.modules())))
+for i in model.parameters():
+    print(i.shape,)# i.data
+# for i in model.modules():
+#     print(i)
+for name, tensor in model.state_dict(keep_vars=True).items():
+    print(name, tensor.detach().clone())
