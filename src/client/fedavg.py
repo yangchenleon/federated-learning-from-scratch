@@ -2,10 +2,8 @@ import os, pickle, sys
 import torch
 import numpy as np
 from tqdm import tqdm
-from sklearn.preprocessing import label_binarize
 from sklearn import metrics
 import torch.nn.functional as F
-from torch.utils.data.dataset import Subset
 
 sys.path.append('')
 from data.utils.datasets import DatasetDict, CustomSubset
@@ -71,7 +69,7 @@ class Client(object):
         # print(self.trainset.data.shape, self.trainset.data.dtype)
         # print(next(iter(self.trainloader))[0].shape, next(iter(self.trainloader))[0].dtype)
         return self.trainset, self.testset
-    
+
     def train(self, startckpt=None, save=True):
         self.model.train()
         start, end = 0, self.args.num_epochs

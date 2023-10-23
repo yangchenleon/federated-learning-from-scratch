@@ -2,7 +2,6 @@ import numpy as np
 import torch, torchvision
 from torch.utils.data.dataset import Dataset, Subset
 
-
 class CustomDataset(Dataset):
     def __init__(self, transform, target_transform):
         self.data = None
@@ -27,25 +26,15 @@ class CustomDataset(Dataset):
 class CustomSubset(Subset):
     # to access the subset, a whole dataset is required
     def __init__(self, dataset, indices, subset_transform=None):
-        # super().__init__()
-        self.dataset = dataset
-        self.indices = indices
+        super().__init__(dataset, indices)
         self.targets = dataset.targets[indices]
         self.data = dataset.data[indices]
         self.classes = dataset.classes
         self.subset_transform = subset_transform
-
-    def __getitem__(self, index):
-        data, targets = self.dataset[index]
-        # x, y = self.data[idx], self.targets[idx]
-        # here use index to get, so fatherset transform is applied
-        if self.subset_transform:
-            x = self.subset_transform(x)
-      
-        return data, targets
-    
-    def __len__(self): 
-        return len(self.indices)
+    # subset_transfrom 涉及__getitem__，其又涉及dataloader
+    # 理论上直接return transform(self.dataset[indices[idx]])
+    # 或者trans(self.data.numpy()[idx])可以了
+    # 但是不确定还要验证，主要也用不上，暂不折腾
 
 class CustomMNIST(CustomDataset):
     def __init__(self, root, transform=None, target_transform=None):

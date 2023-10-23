@@ -26,10 +26,10 @@ if __name__ == "__main__":
     parser.add_argument("-wd", "--weight_decay", type=float, default=0.0)
     parser.add_argument("-bs", "--batch_size", type=int, default=256)
     parser.add_argument("-mom", "--momentum", type=float, default=0.0)
-    parser.add_argument("-ne", "--num_epochs", type=int, default=40)
+    parser.add_argument("-ne", "--num_epochs", type=int, default=10)
     args = parser.parse_args()
 
-    dataset_name, model_name = 'mnist', 'alexnet'
+    dataset_name, model_name = 'mnist', 'pretrianed-alexnet'
     # partition, stats = partition_data(dataset_name, args)
     # save_partition(partition, stats, args, path=par_dict[dataset_name])
     # draw_distribution(dataset, partition)
@@ -42,8 +42,16 @@ if __name__ == "__main__":
         transforms.Normalize([0.5], [0.5]),
         # transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])
     ])
-    client = Client(0, dataset_name, model_name, args, None, 'cuda')
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    client = Client(0, dataset_name, model_name, args, None, device)
     trainset, testset = client.load_dataset(transform=trans)
-    client.train('results/checkpoints/0_cifar10_AlexNet_30.pth')
-    client.load_state('results/checkpoints/0_mnist_AlexNet_40.pth')
+    client.trainloader = torch.utils.data.DataLoader(CustomSubset(trainset, range(100)), batch_size=16, shuffle=False) if torch.cuda.is_available() else client.trainloader
+    client.train()
+    # client.load_state('results/checkpoints/0_mnist_AlexNet_40.pth')
     client.eval()
+
+    # 更新一下partition的读取问题
+    # 训练过程、预测结果可视化
+    # index相关问题（数据索引是否正确）
+    # pretrained loading
+    # 中间特征输出

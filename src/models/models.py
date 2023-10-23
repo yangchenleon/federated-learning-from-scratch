@@ -1,6 +1,9 @@
-import torch
+import os
+os.environ['TORCH_HOME']='results/pretrained/'
+import torch, torchvision
 import torch.nn as nn
 from data.utils.setting import data_info
+
 
 class MLP(nn.Module):
     def __init__(self, dataset):
@@ -30,13 +33,13 @@ class MLP(nn.Module):
                 nn.init.normal_(layer.weight, std=0.01)
                 # nn.init.xavier_normal_(layer.weight.data)
 
-class AlexNet(nn.Module):
+class PerAlexNet(nn.Module):
     def __init__(self, dataset):
         super(AlexNet, self).__init__()
-        input_dim, output_dim = data_info[dataset][0], data_info[dataset][2]
-        input_dim = 3
+        input_dim = data_info[dataset][0]
+        output_dim = data_info[dataset][2]
         self.features = nn.Sequential(
-            nn.Conv2d(input_dim, 64, kernel_size=11, stride=4, padding=2),
+            nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=3, stride=2),
             nn.Conv2d(64, 192, kernel_size=5, padding=2),
@@ -69,7 +72,25 @@ class AlexNet(nn.Module):
         x = self.fc(x)
         return x
 
+class AlexNet(nn.Module):
+    def __init__(self, dataset):
+        input_dim = data_info[dataset][0] * data_info[dataset][1]
+        output_dim = data_info[dataset][2]
+        super(AlexNet, self).__init__()
+        self.base = torchvision.models.alexnet(
+            weights=torchvision.models.AlexNet_Weights.DEFAULT)
+        self.classifier = nn.Linear(
+            self.base.classifier[-1].in_features, output_dim
+        )
+        self.base.classifier[-1] = nn.Identity()
+
+    def forward(self, x):
+        x = self.base(x)
+        x = self.classifier(x)
+        return x   
+
 ModelDict = {
     'mlp': MLP,
-    'alexnet': AlexNet
+    'alexnet': AlexNet,
+    'peralexnet': PerAlexNet, 
 }
