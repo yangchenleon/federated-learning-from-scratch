@@ -2,6 +2,8 @@ import numpy as np
 import torch, torchvision
 from torch.utils.data.dataset import Dataset, Subset
 
+from data.utils.setting import data_dict
+
 class CustomDataset(Dataset):
     def __init__(self, transform, target_transform):
         self.data = None
@@ -37,7 +39,7 @@ class CustomSubset(Subset):
     # 但是不确定还要验证，主要也用不上，暂不折腾
 
 class CustomMNIST(CustomDataset):
-    def __init__(self, root, transform=None, target_transform=None):
+    def __init__(self, root=data_dict['mnist'], transform=None, target_transform=None):
         super().__init__(transform, target_transform)
         self.root = root
 
@@ -58,7 +60,7 @@ class CustomMNIST(CustomDataset):
         self.classes = trainset.classes
 
 class CustomFashionMNIST(CustomDataset):
-    def __init__(self, root, transform=None, target_transform=None):
+    def __init__(self, root=data_dict['fashion'], transform=None, target_transform=None):
         super().__init__(transform, target_transform)
         self.root = root
 
@@ -75,12 +77,13 @@ class CustomFashionMNIST(CustomDataset):
         self.classes = trainset.classes
 
 class CustomCIFAR10(CustomDataset):
-    def __init__(self, root, transform=None, target_transform=None):
+    def __init__(self, root=data_dict['cifar10'], transform=None, target_transform=None):
         super().__init__(transform, target_transform)
         self.root = root
 
-        trainset = torchvision.datasets.CIFAR10(root, train=True, download=True)
-        testset = torchvision.datasets.CIFAR10(root, train=False, download=True)
+        # first time remember to switch True download
+        trainset = torchvision.datasets.CIFAR10(root, train=True, download=False)
+        testset = torchvision.datasets.CIFAR10(root, train=False, download=False)
         
         # here actually trainset.data is already a tensor, no need to torch.tensor()
         train_data = torch.Tensor(trainset.data).permute([0, 1, 2, 3]) # 0 -1 1 2 if dont use ToTensor()

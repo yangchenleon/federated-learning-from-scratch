@@ -248,30 +248,45 @@ import torch.nn.functional as F
 
 # ------------------------------------
 import torch.nn as nn
-class MLP(nn.Module):
+import torchvision
+class AlexNet(nn.Module):
     def __init__(self):
-        super(MLP, self).__init__()
-        self.flat = nn.Flatten()
-        self.relu = nn.ReLU()
-        self.fc1 = nn.Linear(28*28, 256)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 10)
-    
+        super(AlexNet, self).__init__()
+        self.base = torchvision.models.alexnet(
+            weights=None
+        )
+        self.classifier = nn.Linear(
+            self.base.classifier[-1].in_features, 10
+        )
+        self.base.classifier[-1] = nn.Identity()
+
+        # self.model = torchvision.models.alexnet(
+        #     weights=torchvision.models.AlexNet_Weights.DEFAULT if pretrained else None,
+        #     num_classes = output_dim
+        # )
+
     def forward(self, x):
-        # x = x.view(x.size(0), -1)
-        x = self.flat(x)
-        x = self.relu(self.fc1(x))
-        x = self.relu(self.fc2(x))
-        x = self.fc3(x)
-        
+        x = self.base(x)
+        x = self.classifier(x)
         return x
     
-model = MLP()
-print(isinstance(model, nn.Module))
-print(len(list(model.parameters())), len(list(model.modules())))
-for i in model.parameters():
-    print(i.shape,)# i.data
+model = AlexNet()
+# print(isinstance(model, nn.Module))
+# print(len(list(model.parameters())), len(list(model.modules())))
+# for i in model.parameters():
+#     print(i.shape,)# i.data
 # for i in model.modules():
 #     print(i)
-for name, tensor in model.state_dict(keep_vars=True).items():
-    print(name, tensor.detach().clone())
+# for name, tensor in model.state_dict(keep_vars=True).items():
+#     print(name, tensor.detach().clone())
+
+# ------------------------------------
+import random
+a = random.choices([1], k=5)
+# print(a)
+
+# ------------------------------------
+a = {'yi': 1, 'er':2, 'san':3}
+b = [3,2,1]
+for  val, num in zip(a, b):
+    print( val, num)

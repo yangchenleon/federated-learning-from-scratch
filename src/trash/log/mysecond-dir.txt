@@ -1,0 +1,902 @@
+  0%|                                                                         | 0/100 [00:00<?, ?it/s]client18, test loss:2444.174, test accuracy:35.29%
+client18, test loss:3.041, test accuracy:92.41%
+client5, test loss:5902.993, test accuracy:0.00%
+client5, test loss:12.635, test accuracy:83.84%
+client6, test loss:4835.302, test accuracy:0.00%
+client6, test loss:0.024, test accuracy:100.00%
+client3, test loss:6358.673, test accuracy:0.00%
+client3, test loss:8.850, test accuracy:79.55%
+global, test loss:82.752, test accuracy:10.08%
+  1%|▋                                                                | 1/100 [00:22<36:26, 22.09s/it]client8, test loss:10.159, test accuracy:9.09%
+client8, test loss:3.940, test accuracy:75.00%
+client5, test loss:53.633, test accuracy:7.69%
+client5, test loss:6.814, test accuracy:84.62%
+client1, test loss:71.240, test accuracy:0.00%
+client1, test loss:8.372, test accuracy:82.17%
+client4, test loss:59.050, test accuracy:0.00%
+client4, test loss:3.286, test accuracy:94.45%
+global, test loss:76.829, test accuracy:13.70%
+  2%|█▎                                                               | 2/100 [00:39<31:12, 19.10s/it]client17, test loss:22.468, test accuracy:3.36%
+client17, test loss:3.412, test accuracy:84.50%
+client14, test loss:37.161, test accuracy:8.01%
+client14, test loss:6.342, test accuracy:82.64%
+client1, test loss:43.981, test accuracy:11.66%
+client1, test loss:12.104, test accuracy:75.89%
+client18, test loss:61.545, test accuracy:0.00%
+client18, test loss:3.414, test accuracy:91.84%
+global, test loss:64.367, test accuracy:22.17%
+  3%|█▉                                                               | 3/100 [00:55<29:11, 18.05s/it]client3, test loss:75.110, test accuracy:2.18%
+client3, test loss:12.803, test accuracy:76.42%
+client15, test loss:7.180, test accuracy:73.68%
+client15, test loss:2.602, test accuracy:83.66%
+client16, test loss:13.607, test accuracy:36.56%
+client16, test loss:0.957, test accuracy:96.93%
+client8, test loss:17.349, test accuracy:5.68%
+client8, test loss:3.099, test accuracy:75.57%
+global, test loss:84.271, test accuracy:19.11%
+  4%|██▌                                                              | 4/100 [01:08<25:42, 16.07s/it]client13, test loss:23.733, test accuracy:37.58%
+client13, test loss:4.537, test accuracy:84.84%
+client18, test loss:75.271, test accuracy:0.00%
+client18, test loss:1.756, test accuracy:95.06%
+client11, test loss:26.770, test accuracy:39.85%
+client11, test loss:8.833, test accuracy:76.82%
+client9, test loss:45.475, test accuracy:6.15%
+client9, test loss:1.446, test accuracy:94.68%
+global, test loss:68.369, test accuracy:23.59%
+  5%|███▎                                                             | 5/100 [01:25<25:42, 16.24s/it]client0, test loss:93.108, test accuracy:0.00%
+client0, test loss:0.442, test accuracy:99.33%
+client6, test loss:53.889, test accuracy:0.71%
+client6, test loss:0.017, test accuracy:100.00%
+client8, test loss:5.267, test accuracy:55.11%
+client8, test loss:3.099, test accuracy:76.14%
+client19, test loss:11.895, test accuracy:9.95%
+client19, test loss:4.555, test accuracy:61.99%
+global, test loss:83.773, test accuracy:13.51%
+  6%|███▉                                                             | 6/100 [01:39<24:26, 15.60s/it]client2, test loss:8.287, test accuracy:1.09%
+client2, test loss:0.625, test accuracy:91.30%
+client18, test loss:63.249, test accuracy:0.00%
+client18, test loss:2.399, test accuracy:93.91%
+client1, test loss:52.431, test accuracy:7.09%
+client1, test loss:8.860, test accuracy:81.14%
+client11, test loss:43.745, test accuracy:1.97%
+client11, test loss:8.161, test accuracy:77.27%
+global, test loss:52.100, test accuracy:31.20%
+  7%|████▌                                                            | 7/100 [01:55<24:01, 15.50s/it]client17, test loss:15.984, test accuracy:19.90%
+client17, test loss:4.249, test accuracy:88.37%
+client11, test loss:22.827, test accuracy:18.18%
+client11, test loss:7.715, test accuracy:80.30%
+client15, test loss:8.065, test accuracy:56.51%
+client15, test loss:2.924, test accuracy:84.49%
+client2, test loss:4.794, test accuracy:6.52%
+client2, test loss:0.692, test accuracy:90.22%
+global, test loss:71.547, test accuracy:27.61%
+  8%|█████▏                                                           | 8/100 [02:05<21:24, 13.96s/it]client17, test loss:4.229, test accuracy:80.36%
+client17, test loss:2.912, test accuracy:87.08%
+client18, test loss:60.829, test accuracy:6.55%
+client18, test loss:3.283, test accuracy:94.37%
+client3, test loss:42.417, test accuracy:30.78%
+client3, test loss:9.341, test accuracy:80.97%
+client16, test loss:11.103, test accuracy:50.24%
+client16, test loss:0.739, test accuracy:96.93%
+global, test loss:62.255, test accuracy:27.77%
+  9%|█████▊                                                           | 9/100 [02:22<22:21, 14.74s/it]client11, test loss:14.901, test accuracy:55.15%
+client11, test loss:8.612, test accuracy:77.58%
+client8, test loss:3.887, test accuracy:73.30%
+client8, test loss:3.610, test accuracy:76.70%
+client7, test loss:8.248, test accuracy:19.67%
+client7, test loss:2.506, test accuracy:60.66%
+client13, test loss:25.775, test accuracy:24.35%
+client13, test loss:5.353, test accuracy:84.52%
+global, test loss:74.490, test accuracy:26.84%
+ 10%|██████▍                                                         | 10/100 [02:33<20:22, 13.59s/it]client4, test loss:80.415, test accuracy:3.00%
+client4, test loss:3.492, test accuracy:94.56%
+client6, test loss:55.976, test accuracy:8.72%
+client6, test loss:0.016, test accuracy:100.00%
+client10, test loss:21.946, test accuracy:20.58%
+client10, test loss:8.000, test accuracy:79.78%
+client12, test loss:54.081, test accuracy:0.16%
+client12, test loss:0.160, test accuracy:99.84%
+global, test loss:52.688, test accuracy:27.96%
+ 11%|███████                                                         | 11/100 [02:50<21:51, 14.74s/it]client19, test loss:7.571, test accuracy:30.77%
+client19, test loss:4.656, test accuracy:59.73%
+client7, test loss:3.283, test accuracy:48.36%
+client7, test loss:2.299, test accuracy:63.11%
+client2, test loss:5.631, test accuracy:9.78%
+client2, test loss:0.680, test accuracy:92.39%
+client15, test loss:14.518, test accuracy:22.44%
+client15, test loss:2.649, test accuracy:86.43%
+global, test loss:63.816, test accuracy:27.39%
+ 12%|███████▋                                                        | 12/100 [02:57<18:19, 12.49s/it]client14, test loss:19.801, test accuracy:38.13%
+client14, test loss:5.671, test accuracy:86.20%
+client18, test loss:44.830, test accuracy:15.40%
+client18, test loss:3.166, test accuracy:94.48%
+client8, test loss:16.539, test accuracy:10.80%
+client8, test loss:4.060, test accuracy:76.14%
+client12, test loss:39.021, test accuracy:0.48%
+client12, test loss:0.101, test accuracy:99.84%
+global, test loss:86.045, test accuracy:20.71%
+ 13%|████████▎                                                       | 13/100 [03:12<19:02, 13.13s/it]client3, test loss:72.279, test accuracy:4.36%
+client3, test loss:10.731, test accuracy:82.48%
+client10, test loss:27.242, test accuracy:21.84%
+client10, test loss:4.971, test accuracy:85.56%
+client8, test loss:18.341, test accuracy:0.00%
+client8, test loss:3.155, test accuracy:76.14%
+client11, test loss:52.789, test accuracy:4.39%
+client11, test loss:7.883, test accuracy:80.00%
+global, test loss:75.035, test accuracy:28.23%
+ 14%|████████▉                                                       | 14/100 [03:27<19:38, 13.70s/it]client19, test loss:13.122, test accuracy:19.91%
+client19, test loss:4.808, test accuracy:60.63%
+client9, test loss:16.580, test accuracy:46.35%
+client9, test loss:1.555, test accuracy:96.35%
+client7, test loss:10.925, test accuracy:22.13%
+client7, test loss:2.909, test accuracy:66.39%
+client5, test loss:57.717, test accuracy:9.81%
+client5, test loss:7.107, test accuracy:86.29%
+global, test loss:59.004, test accuracy:32.22%
+ 15%|█████████▌                                                      | 15/100 [03:39<18:48, 13.28s/it]client5, test loss:14.903, test accuracy:67.78%
+client5, test loss:7.644, test accuracy:86.85%
+client1, test loss:58.046, test accuracy:4.34%
+client1, test loss:9.312, test accuracy:81.94%
+client18, test loss:36.277, test accuracy:27.93%
+client18, test loss:3.188, test accuracy:94.71%
+client4, test loss:11.126, test accuracy:78.02%
+client4, test loss:3.043, test accuracy:95.67%
+global, test loss:54.052, test accuracy:31.81%
+ 16%|██████████▏                                                     | 16/100 [04:00<21:32, 15.38s/it]client9, test loss:15.764, test accuracy:45.18%
+client9, test loss:1.828, test accuracy:94.52%
+client13, test loss:26.777, test accuracy:26.61%
+client13, test loss:5.558, test accuracy:84.03%
+client3, test loss:56.749, test accuracy:11.08%
+client3, test loss:11.826, test accuracy:83.43%
+client1, test loss:35.865, test accuracy:24.57%
+client1, test loss:7.973, test accuracy:84.34%
+global, test loss:59.719, test accuracy:27.38%
+ 17%|██████████▉                                                     | 17/100 [04:18<22:32, 16.29s/it]client13, test loss:11.365, test accuracy:64.84%
+client13, test loss:4.881, test accuracy:87.42%
+client0, test loss:60.982, test accuracy:7.82%
+client0, test loss:0.922, test accuracy:99.33%
+client10, test loss:18.638, test accuracy:25.45%
+client10, test loss:5.331, test accuracy:85.56%
+client14, test loss:17.793, test accuracy:49.26%
+client14, test loss:5.142, test accuracy:86.50%
+global, test loss:65.512, test accuracy:29.06%
+ 18%|███████████▌                                                    | 18/100 [04:35<22:38, 16.57s/it]client14, test loss:9.054, test accuracy:76.85%
+client14, test loss:6.501, test accuracy:86.20%
+client9, test loss:14.387, test accuracy:50.00%
+client9, test loss:1.644, test accuracy:95.51%
+client2, test loss:9.038, test accuracy:1.09%
+client2, test loss:0.772, test accuracy:90.22%
+client3, test loss:51.150, test accuracy:21.31%
+client3, test loss:11.162, test accuracy:83.52%
+global, test loss:81.099, test accuracy:25.95%
+ 19%|████████████▏                                                   | 19/100 [04:50<21:43, 16.10s/it]client18, test loss:49.043, test accuracy:24.48%
+client18, test loss:2.073, test accuracy:95.40%
+client19, test loss:11.969, test accuracy:24.89%
+client19, test loss:5.270, test accuracy:61.99%
+client4, test loss:76.009, test accuracy:4.44%
+client4, test loss:3.051, test accuracy:95.56%
+client6, test loss:49.307, test accuracy:21.32%
+client6, test loss:0.017, test accuracy:100.00%
+global, test loss:61.294, test accuracy:29.38%
+ 20%|████████████▊                                                   | 20/100 [05:07<21:46, 16.34s/it]client15, test loss:22.495, test accuracy:7.76%
+client15, test loss:2.406, test accuracy:89.47%
+client4, test loss:19.458, test accuracy:52.94%
+client4, test loss:4.280, test accuracy:95.01%
+client13, test loss:23.005, test accuracy:35.32%
+client13, test loss:5.879, test accuracy:85.65%
+client5, test loss:55.229, test accuracy:21.74%
+client5, test loss:8.718, test accuracy:83.95%
+global, test loss:65.154, test accuracy:26.22%
+ 21%|█████████████▍                                                  | 21/100 [05:24<21:37, 16.43s/it]client4, test loss:4.993, test accuracy:92.67%
+client4, test loss:3.468, test accuracy:95.12%
+client10, test loss:33.974, test accuracy:6.50%
+client10, test loss:5.130, test accuracy:84.30%
+client7, test loss:5.161, test accuracy:51.64%
+client7, test loss:2.903, test accuracy:63.93%
+client0, test loss:79.611, test accuracy:0.76%
+client0, test loss:0.840, test accuracy:99.33%
+global, test loss:58.189, test accuracy:29.03%
+ 22%|██████████████                                                  | 22/100 [05:40<21:09, 16.28s/it]client19, test loss:10.246, test accuracy:26.70%
+client19, test loss:5.607, test accuracy:62.90%
+client10, test loss:22.675, test accuracy:18.41%
+client10, test loss:4.950, test accuracy:85.20%
+client2, test loss:7.163, test accuracy:0.00%
+client2, test loss:0.642, test accuracy:93.48%
+client15, test loss:18.238, test accuracy:15.51%
+client15, test loss:3.332, test accuracy:86.43%
+global, test loss:83.992, test accuracy:25.88%
+ 23%|██████████████▋                                                 | 23/100 [05:49<18:13, 14.21s/it]client0, test loss:74.177, test accuracy:3.44%
+client0, test loss:0.908, test accuracy:99.33%
+client18, test loss:50.295, test accuracy:27.93%
+client18, test loss:3.078, test accuracy:94.25%
+client17, test loss:26.202, test accuracy:20.93%
+client17, test loss:4.457, test accuracy:86.30%
+client7, test loss:10.807, test accuracy:6.56%
+client7, test loss:2.753, test accuracy:68.85%
+global, test loss:64.164, test accuracy:24.34%
+ 24%|███████████████▎                                                | 24/100 [06:04<18:17, 14.44s/it]client19, test loss:11.724, test accuracy:13.57%
+client19, test loss:5.221, test accuracy:64.25%
+client3, test loss:71.674, test accuracy:2.94%
+client3, test loss:12.070, test accuracy:83.14%
+client0, test loss:10.635, test accuracy:78.05%
+client0, test loss:0.692, test accuracy:99.33%
+client12, test loss:14.682, test accuracy:42.35%
+client12, test loss:0.109, test accuracy:99.84%
+global, test loss:59.535, test accuracy:25.50%
+ 25%|████████████████                                                | 25/100 [06:21<19:08, 15.31s/it]client12, test loss:24.354, test accuracy:8.86%
+client12, test loss:0.083, test accuracy:99.84%
+client14, test loss:26.405, test accuracy:37.39%
+client14, test loss:5.905, test accuracy:85.91%
+client15, test loss:23.380, test accuracy:6.09%
+client15, test loss:2.515, test accuracy:88.92%
+client8, test loss:6.191, test accuracy:32.95%
+client8, test loss:3.113, test accuracy:76.14%
+global, test loss:66.584, test accuracy:26.42%
+ 26%|████████████████▋                                               | 26/100 [06:34<17:43, 14.38s/it]client15, test loss:8.823, test accuracy:57.62%
+client15, test loss:3.301, test accuracy:87.81%
+client18, test loss:21.577, test accuracy:45.75%
+client18, test loss:2.244, test accuracy:94.94%
+client12, test loss:14.646, test accuracy:37.36%
+client12, test loss:0.124, test accuracy:99.84%
+client19, test loss:8.744, test accuracy:48.42%
+client19, test loss:5.220, test accuracy:59.73%
+global, test loss:96.608, test accuracy:18.97%
+ 27%|█████████████████▎                                              | 27/100 [06:47<17:05, 14.05s/it]client2, test loss:11.254, test accuracy:0.00%
+client2, test loss:0.487, test accuracy:94.57%
+client3, test loss:90.294, test accuracy:1.04%
+client3, test loss:12.717, test accuracy:83.33%
+client16, test loss:30.036, test accuracy:1.18%
+client16, test loss:0.965, test accuracy:96.70%
+client13, test loss:42.841, test accuracy:2.10%
+client13, test loss:6.416, test accuracy:87.58%
+global, test loss:89.941, test accuracy:21.64%
+ 28%|█████████████████▉                                              | 28/100 [07:01<16:46, 13.98s/it]client6, test loss:51.836, test accuracy:24.97%
+client6, test loss:0.017, test accuracy:100.00%
+client2, test loss:7.342, test accuracy:22.83%
+client2, test loss:0.313, test accuracy:96.74%
+client14, test loss:25.229, test accuracy:48.66%
+client14, test loss:6.244, test accuracy:84.87%
+client18, test loss:64.719, test accuracy:2.99%
+client18, test loss:3.126, test accuracy:95.29%
+global, test loss:63.791, test accuracy:27.99%
+ 29%|██████████████████▌                                             | 29/100 [07:16<16:59, 14.36s/it]client5, test loss:66.640, test accuracy:4.57%
+client5, test loss:7.553, test accuracy:86.29%
+client19, test loss:6.649, test accuracy:41.63%
+client19, test loss:5.155, test accuracy:63.35%
+client14, test loss:18.257, test accuracy:50.89%
+client14, test loss:6.074, test accuracy:86.65%
+client6, test loss:21.205, test accuracy:43.35%
+client6, test loss:0.019, test accuracy:100.00%
+global, test loss:63.064, test accuracy:29.54%
+ 30%|███████████████████▏                                            | 30/100 [07:32<17:20, 14.87s/it]client11, test loss:31.653, test accuracy:20.15%
+client11, test loss:8.544, test accuracy:80.76%
+client8, test loss:14.059, test accuracy:9.66%
+client8, test loss:3.089, test accuracy:76.14%
+client12, test loss:45.750, test accuracy:0.32%
+client12, test loss:0.119, test accuracy:99.84%
+client13, test loss:16.159, test accuracy:44.19%
+client13, test loss:6.378, test accuracy:86.45%
+global, test loss:54.642, test accuracy:32.89%
+ 31%|███████████████████▊                                            | 31/100 [07:45<16:33, 14.40s/it]client13, test loss:12.555, test accuracy:62.74%
+client13, test loss:5.780, test accuracy:87.58%
+client1, test loss:42.114, test accuracy:16.00%
+client1, test loss:8.618, test accuracy:81.94%
+client5, test loss:31.144, test accuracy:36.68%
+client5, test loss:13.883, test accuracy:87.51%
+client12, test loss:19.286, test accuracy:22.22%
+client12, test loss:0.160, test accuracy:99.84%
+global, test loss:48.608, test accuracy:36.84%
+ 32%|████████████████████▍                                           | 32/100 [08:03<17:26, 15.40s/it]client9, test loss:28.424, test accuracy:20.10%
+client9, test loss:1.241, test accuracy:95.51%
+client16, test loss:8.953, test accuracy:63.21%
+client16, test loss:0.955, test accuracy:96.93%
+client1, test loss:21.426, test accuracy:53.14%
+client1, test loss:8.429, test accuracy:83.54%
+client12, test loss:23.792, test accuracy:13.85%
+client12, test loss:0.178, test accuracy:99.84%
+global, test loss:55.312, test accuracy:32.47%
+ 33%|█████████████████████                                           | 33/100 [08:18<17:11, 15.40s/it]client9, test loss:20.559, test accuracy:30.23%
+client9, test loss:1.497, test accuracy:96.01%
+client8, test loss:10.199, test accuracy:22.73%
+client8, test loss:3.429, test accuracy:76.14%
+client11, test loss:29.454, test accuracy:19.39%
+client11, test loss:7.795, test accuracy:80.00%
+client13, test loss:34.796, test accuracy:10.97%
+client13, test loss:6.157, test accuracy:87.10%
+global, test loss:65.187, test accuracy:30.95%
+ 34%|█████████████████████▊                                          | 34/100 [08:32<16:13, 14.75s/it]client7, test loss:8.904, test accuracy:18.85%
+client7, test loss:2.811, test accuracy:65.57%
+client4, test loss:55.938, test accuracy:9.10%
+client4, test loss:3.300, test accuracy:95.45%
+client0, test loss:77.231, test accuracy:2.77%
+client0, test loss:0.796, test accuracy:99.33%
+client10, test loss:21.055, test accuracy:38.27%
+client10, test loss:4.461, test accuracy:87.18%
+global, test loss:54.013, test accuracy:33.02%
+ 35%|██████████████████████▍                                         | 35/100 [08:48<16:21, 15.10s/it]client19, test loss:10.288, test accuracy:24.89%
+client19, test loss:4.568, test accuracy:64.25%
+client0, test loss:9.762, test accuracy:85.21%
+client0, test loss:1.019, test accuracy:99.33%
+client2, test loss:6.706, test accuracy:1.09%
+client2, test loss:0.654, test accuracy:94.57%
+client7, test loss:4.762, test accuracy:42.62%
+client7, test loss:2.484, test accuracy:68.03%
+global, test loss:103.384, test accuracy:12.31%
+ 36%|███████████████████████                                         | 36/100 [08:58<14:38, 13.72s/it]client15, test loss:33.979, test accuracy:1.66%
+client15, test loss:2.512, test accuracy:87.26%
+client0, test loss:0.962, test accuracy:98.95%
+client0, test loss:0.852, test accuracy:99.33%
+client12, test loss:61.330, test accuracy:0.16%
+client12, test loss:0.195, test accuracy:99.84%
+client13, test loss:47.065, test accuracy:3.23%
+client13, test loss:5.827, test accuracy:87.74%
+global, test loss:64.143, test accuracy:22.15%
+ 37%|███████████████████████▋                                        | 37/100 [09:14<15:07, 14.40s/it]client12, test loss:25.650, test accuracy:3.70%
+client12, test loss:0.148, test accuracy:99.84%
+client6, test loss:50.307, test accuracy:15.08%
+client6, test loss:0.017, test accuracy:100.00%
+client10, test loss:24.632, test accuracy:20.58%
+client10, test loss:4.637, test accuracy:85.56%
+client16, test loss:23.232, test accuracy:5.90%
+client16, test loss:0.910, test accuracy:97.41%
+global, test loss:55.645, test accuracy:28.09%
+ 38%|████████████████████████▎                                       | 38/100 [09:29<15:04, 14.59s/it]client16, test loss:7.782, test accuracy:69.58%
+client16, test loss:0.769, test accuracy:97.17%
+client15, test loss:11.465, test accuracy:44.88%
+client15, test loss:2.487, test accuracy:86.98%
+client10, test loss:14.255, test accuracy:50.54%
+client10, test loss:5.593, test accuracy:86.46%
+client14, test loss:33.016, test accuracy:18.55%
+client14, test loss:5.458, test accuracy:87.39%
+global, test loss:86.415, test accuracy:26.85%
+ 39%|████████████████████████▉                                       | 39/100 [09:42<14:21, 14.13s/it]client5, test loss:80.500, test accuracy:1.23%
+client5, test loss:8.050, test accuracy:87.40%
+client11, test loss:52.711, test accuracy:11.52%
+client11, test loss:7.949, test accuracy:80.61%
+client0, test loss:80.881, test accuracy:3.63%
+client0, test loss:0.950, test accuracy:99.33%
+client4, test loss:91.754, test accuracy:1.00%
+client4, test loss:4.469, test accuracy:95.89%
+global, test loss:51.279, test accuracy:36.74%
+ 40%|█████████████████████████▌                                      | 40/100 [10:02<15:54, 15.91s/it]client13, test loss:22.637, test accuracy:34.84%
+client13, test loss:5.590, test accuracy:86.94%
+client10, test loss:25.238, test accuracy:21.48%
+client10, test loss:4.537, test accuracy:85.92%
+client2, test loss:2.822, test accuracy:56.52%
+client2, test loss:0.498, test accuracy:95.65%
+client3, test loss:44.487, test accuracy:23.30%
+client3, test loss:13.149, test accuracy:83.43%
+global, test loss:74.359, test accuracy:25.12%
+ 41%|██████████████████████████▏                                     | 41/100 [10:17<15:12, 15.46s/it]client12, test loss:56.770, test accuracy:0.16%
+client12, test loss:0.127, test accuracy:99.84%
+client18, test loss:60.411, test accuracy:14.02%
+client18, test loss:3.792, test accuracy:94.48%
+client14, test loss:16.574, test accuracy:56.97%
+client14, test loss:5.759, test accuracy:86.20%
+client11, test loss:26.625, test accuracy:38.18%
+client11, test loss:8.620, test accuracy:80.61%
+global, test loss:64.455, test accuracy:27.25%
+ 42%|██████████████████████████▉                                     | 42/100 [10:34<15:20, 15.88s/it]client11, test loss:31.262, test accuracy:15.45%
+client11, test loss:8.210, test accuracy:80.00%
+client19, test loss:10.622, test accuracy:23.53%
+client19, test loss:5.591, test accuracy:62.44%
+client16, test loss:23.102, test accuracy:14.39%
+client16, test loss:0.643, test accuracy:97.41%
+client0, test loss:80.929, test accuracy:0.00%
+client0, test loss:1.060, test accuracy:99.33%
+global, test loss:56.578, test accuracy:29.18%
+ 43%|███████████████████████████▌                                    | 43/100 [10:48<14:43, 15.49s/it]client17, test loss:15.785, test accuracy:26.10%
+client17, test loss:4.181, test accuracy:85.53%
+client11, test loss:20.250, test accuracy:31.82%
+client11, test loss:9.994, test accuracy:81.82%
+client8, test loss:7.063, test accuracy:33.52%
+client8, test loss:3.286, test accuracy:75.57%
+client4, test loss:53.463, test accuracy:3.22%
+client4, test loss:3.418, test accuracy:95.23%
+global, test loss:54.463, test accuracy:34.84%
+ 44%|████████████████████████████▏                                   | 44/100 [11:02<13:54, 14.91s/it]client4, test loss:9.649, test accuracy:78.25%
+client4, test loss:3.698, test accuracy:95.23%
+client2, test loss:1.512, test accuracy:73.91%
+client2, test loss:0.487, test accuracy:91.30%
+client19, test loss:11.047, test accuracy:27.15%
+client19, test loss:5.460, test accuracy:66.97%
+client12, test loss:34.755, test accuracy:7.41%
+client12, test loss:0.035, test accuracy:99.84%
+global, test loss:80.852, test accuracy:22.68%
+ 45%|████████████████████████████▊                                   | 45/100 [11:14<12:54, 14.09s/it]client5, test loss:39.160, test accuracy:30.99%
+client5, test loss:7.185, test accuracy:87.85%
+client6, test loss:74.872, test accuracy:2.24%
+client6, test loss:0.017, test accuracy:100.00%
+client16, test loss:33.613, test accuracy:1.42%
+client16, test loss:1.053, test accuracy:96.93%
+client14, test loss:38.122, test accuracy:35.16%
+client14, test loss:6.517, test accuracy:87.39%
+global, test loss:53.500, test accuracy:34.59%
+ 46%|█████████████████████████████▍                                  | 46/100 [11:31<13:27, 14.96s/it]client2, test loss:2.962, test accuracy:61.96%
+client2, test loss:0.516, test accuracy:93.48%
+client19, test loss:6.802, test accuracy:43.89%
+client19, test loss:5.106, test accuracy:65.16%
+client0, test loss:67.876, test accuracy:0.86%
+client0, test loss:0.635, test accuracy:99.33%
+client9, test loss:22.586, test accuracy:32.56%
+client9, test loss:1.494, test accuracy:95.68%
+global, test loss:71.461, test accuracy:19.06%
+ 47%|██████████████████████████████                                  | 47/100 [11:44<12:38, 14.31s/it]client13, test loss:35.912, test accuracy:8.55%
+client13, test loss:6.716, test accuracy:86.45%
+client0, test loss:3.605, test accuracy:97.23%
+client0, test loss:0.875, test accuracy:99.33%
+client10, test loss:30.965, test accuracy:15.52%
+client10, test loss:5.525, test accuracy:85.38%
+client1, test loss:44.448, test accuracy:19.89%
+client1, test loss:9.465, test accuracy:82.40%
+global, test loss:70.615, test accuracy:27.16%
+ 48%|██████████████████████████████▋                                 | 48/100 [12:02<13:23, 15.44s/it]client7, test loss:8.595, test accuracy:13.11%
+client7, test loss:2.458, test accuracy:69.67%
+client0, test loss:8.941, test accuracy:79.20%
+client0, test loss:0.963, test accuracy:99.33%
+client15, test loss:7.672, test accuracy:63.71%
+client15, test loss:3.082, test accuracy:87.53%
+client17, test loss:28.520, test accuracy:12.40%
+client17, test loss:3.061, test accuracy:86.30%
+global, test loss:79.965, test accuracy:16.83%
+ 49%|███████████████████████████████▎                                | 49/100 [12:14<12:23, 14.57s/it]client8, test loss:18.287, test accuracy:7.95%
+client8, test loss:4.154, test accuracy:76.70%
+client7, test loss:9.641, test accuracy:4.10%
+client7, test loss:2.519, test accuracy:71.31%
+client5, test loss:57.186, test accuracy:2.01%
+client5, test loss:14.672, test accuracy:87.85%
+client11, test loss:47.291, test accuracy:2.88%
+client11, test loss:8.369, test accuracy:80.76%
+global, test loss:71.546, test accuracy:31.73%
+ 50%|████████████████████████████████                                | 50/100 [12:26<11:33, 13.86s/it]client2, test loss:1.177, test accuracy:86.96%
+client2, test loss:0.679, test accuracy:93.48%
+client15, test loss:25.847, test accuracy:12.74%
+client15, test loss:4.945, test accuracy:87.26%
+client3, test loss:34.754, test accuracy:43.18%
+client3, test loss:13.020, test accuracy:83.62%
+client14, test loss:47.487, test accuracy:13.06%
+client14, test loss:5.999, test accuracy:86.50%
+global, test loss:76.798, test accuracy:26.36%
+ 51%|████████████████████████████████▋                               | 51/100 [12:40<11:18, 13.84s/it]client7, test loss:9.336, test accuracy:22.95%
+client7, test loss:2.527, test accuracy:68.85%
+client0, test loss:87.379, test accuracy:0.10%
+client0, test loss:0.943, test accuracy:99.33%
+client18, test loss:66.555, test accuracy:13.68%
+client18, test loss:2.349, test accuracy:95.63%
+client1, test loss:56.349, test accuracy:11.09%
+client1, test loss:9.634, test accuracy:81.83%
+global, test loss:60.550, test accuracy:29.33%
+ 52%|█████████████████████████████████▎                              | 52/100 [12:57<11:51, 14.83s/it]client17, test loss:31.673, test accuracy:10.34%
+client17, test loss:2.973, test accuracy:87.86%
+client19, test loss:11.139, test accuracy:22.17%
+client19, test loss:6.172, test accuracy:61.54%
+client12, test loss:26.411, test accuracy:7.09%
+client12, test loss:0.114, test accuracy:99.84%
+client5, test loss:60.789, test accuracy:8.25%
+client5, test loss:7.587, test accuracy:88.52%
+global, test loss:59.224, test accuracy:31.57%
+ 53%|█████████████████████████████████▉                              | 53/100 [13:11<11:17, 14.42s/it]client1, test loss:45.560, test accuracy:11.54%
+client1, test loss:9.117, test accuracy:84.00%
+client3, test loss:59.410, test accuracy:12.78%
+client3, test loss:12.745, test accuracy:83.43%
+client17, test loss:5.865, test accuracy:76.49%
+client17, test loss:3.821, test accuracy:87.08%
+client12, test loss:16.742, test accuracy:37.04%
+client12, test loss:0.029, test accuracy:99.84%
+global, test loss:47.852, test accuracy:35.73%
+ 54%|██████████████████████████████████▌                             | 54/100 [13:28<11:42, 15.27s/it]client12, test loss:21.808, test accuracy:21.26%
+client12, test loss:0.078, test accuracy:99.84%
+client11, test loss:19.336, test accuracy:37.73%
+client11, test loss:10.082, test accuracy:78.03%
+client0, test loss:41.763, test accuracy:19.08%
+client0, test loss:0.973, test accuracy:99.33%
+client16, test loss:9.647, test accuracy:57.31%
+client16, test loss:1.134, test accuracy:97.17%
+global, test loss:55.394, test accuracy:30.42%
+ 55%|███████████████████████████████████▏                            | 55/100 [13:44<11:41, 15.59s/it]client18, test loss:33.240, test accuracy:18.51%
+client18, test loss:2.734, test accuracy:95.63%
+client11, test loss:21.230, test accuracy:31.52%
+client11, test loss:8.104, test accuracy:80.61%
+client1, test loss:26.616, test accuracy:50.17%
+client1, test loss:10.229, test accuracy:82.63%
+client10, test loss:23.467, test accuracy:36.46%
+client10, test loss:7.066, test accuracy:83.94%
+global, test loss:59.469, test accuracy:34.07%
+ 56%|███████████████████████████████████▊                            | 56/100 [14:02<11:49, 16.13s/it]client6, test loss:70.152, test accuracy:4.71%
+client6, test loss:0.016, test accuracy:100.00%
+client4, test loss:48.098, test accuracy:15.98%
+client4, test loss:2.498, test accuracy:95.12%
+client14, test loss:39.968, test accuracy:28.34%
+client14, test loss:6.452, test accuracy:86.35%
+client11, test loss:29.653, test accuracy:24.09%
+client11, test loss:7.803, test accuracy:81.36%
+global, test loss:46.043, test accuracy:37.48%
+ 57%|████████████████████████████████████▍                           | 57/100 [14:20<11:57, 16.68s/it]client0, test loss:49.291, test accuracy:8.87%
+client0, test loss:0.917, test accuracy:99.33%
+client19, test loss:6.746, test accuracy:48.42%
+client19, test loss:5.633, test accuracy:66.52%
+client17, test loss:14.035, test accuracy:37.98%
+client17, test loss:4.751, test accuracy:86.05%
+client16, test loss:15.025, test accuracy:29.95%
+client16, test loss:1.112, test accuracy:96.46%
+global, test loss:65.113, test accuracy:22.14%
+ 58%|█████████████████████████████████████                           | 58/100 [14:33<10:56, 15.63s/it]client8, test loss:13.156, test accuracy:11.36%
+client8, test loss:3.919, test accuracy:76.14%
+client5, test loss:38.373, test accuracy:11.82%
+client5, test loss:8.093, test accuracy:88.74%
+client14, test loss:34.736, test accuracy:12.76%
+client14, test loss:5.446, test accuracy:87.98%
+client19, test loss:12.067, test accuracy:16.29%
+client19, test loss:4.803, test accuracy:62.90%
+global, test loss:56.448, test accuracy:36.39%
+ 59%|█████████████████████████████████████▊                          | 59/100 [14:46<10:05, 14.77s/it]client1, test loss:40.309, test accuracy:23.31%
+client1, test loss:8.611, test accuracy:84.57%
+client18, test loss:51.290, test accuracy:19.77%
+client18, test loss:2.873, test accuracy:95.17%
+client16, test loss:28.427, test accuracy:3.77%
+client16, test loss:0.750, test accuracy:97.17%
+client5, test loss:13.032, test accuracy:69.68%
+client5, test loss:7.284, test accuracy:88.18%
+global, test loss:47.474, test accuracy:39.03%
+ 60%|██████████████████████████████████████▍                         | 60/100 [15:04<10:28, 15.72s/it]client19, test loss:8.200, test accuracy:37.56%
+client19, test loss:5.758, test accuracy:62.44%
+client1, test loss:19.722, test accuracy:58.51%
+client1, test loss:8.632, test accuracy:83.77%
+client10, test loss:13.507, test accuracy:58.12%
+client10, test loss:5.702, test accuracy:85.38%
+client16, test loss:6.380, test accuracy:72.88%
+client16, test loss:0.927, test accuracy:97.17%
+global, test loss:88.110, test accuracy:27.38%
+ 61%|███████████████████████████████████████                         | 61/100 [15:17<09:44, 14.98s/it]client2, test loss:10.211, test accuracy:1.09%
+client2, test loss:0.732, test accuracy:93.48%
+client15, test loss:4.965, test accuracy:82.83%
+client15, test loss:3.311, test accuracy:88.37%
+client14, test loss:48.124, test accuracy:28.49%
+client14, test loss:6.386, test accuracy:86.50%
+client11, test loss:53.939, test accuracy:10.76%
+client11, test loss:8.314, test accuracy:80.45%
+global, test loss:62.467, test accuracy:35.85%
+ 62%|███████████████████████████████████████▋                        | 62/100 [15:29<08:54, 14.07s/it]client16, test loss:9.221, test accuracy:61.56%
+client16, test loss:0.697, test accuracy:96.93%
+client14, test loss:12.190, test accuracy:63.65%
+client14, test loss:6.475, test accuracy:87.69%
+client6, test loss:59.149, test accuracy:16.02%
+client6, test loss:0.024, test accuracy:100.00%
+client8, test loss:11.495, test accuracy:18.75%
+client8, test loss:3.662, test accuracy:76.70%
+global, test loss:60.463, test accuracy:29.67%
+ 63%|████████████████████████████████████████▎                       | 63/100 [15:42<08:33, 13.89s/it]client15, test loss:10.282, test accuracy:50.42%
+client15, test loss:2.959, test accuracy:86.98%
+client19, test loss:6.129, test accuracy:46.61%
+client19, test loss:5.290, test accuracy:65.16%
+client16, test loss:12.163, test accuracy:39.62%
+client16, test loss:0.913, test accuracy:96.70%
+client6, test loss:12.338, test accuracy:66.43%
+client6, test loss:0.020, test accuracy:100.00%
+global, test loss:84.130, test accuracy:19.48%
+ 64%|████████████████████████████████████████▉                       | 64/100 [15:55<08:02, 13.40s/it]client13, test loss:40.220, test accuracy:5.16%
+client13, test loss:5.374, test accuracy:86.77%
+client14, test loss:40.732, test accuracy:10.39%
+client14, test loss:7.475, test accuracy:86.20%
+client17, test loss:28.722, test accuracy:5.94%
+client17, test loss:4.008, test accuracy:87.34%
+client0, test loss:80.216, test accuracy:0.95%
+client0, test loss:0.820, test accuracy:99.33%
+global, test loss:64.949, test accuracy:29.69%
+ 65%|█████████████████████████████████████████▌                      | 65/100 [16:11<08:19, 14.27s/it]client14, test loss:8.384, test accuracy:75.67%
+client14, test loss:4.837, test accuracy:88.72%
+client12, test loss:58.586, test accuracy:0.16%
+client12, test loss:0.036, test accuracy:99.84%
+client19, test loss:7.495, test accuracy:45.70%
+client19, test loss:4.863, test accuracy:65.16%
+client1, test loss:28.775, test accuracy:36.80%
+client1, test loss:9.026, test accuracy:85.26%
+global, test loss:66.164, test accuracy:33.40%
+ 66%|██████████████████████████████████████████▏                     | 66/100 [16:26<08:09, 14.41s/it]client11, test loss:46.305, test accuracy:11.21%
+client11, test loss:7.827, test accuracy:81.36%
+client4, test loss:57.379, test accuracy:18.09%
+client4, test loss:3.133, test accuracy:95.67%
+client3, test loss:76.733, test accuracy:13.16%
+client3, test loss:11.290, test accuracy:83.14%
+client7, test loss:7.795, test accuracy:22.13%
+client7, test loss:2.317, test accuracy:70.49%
+global, test loss:63.148, test accuracy:31.60%
+ 67%|██████████████████████████████████████████▉                     | 67/100 [16:42<08:14, 14.99s/it]client1, test loss:55.974, test accuracy:7.09%
+client1, test loss:9.082, test accuracy:85.03%
+client18, test loss:47.080, test accuracy:14.14%
+client18, test loss:3.196, test accuracy:95.75%
+client5, test loss:31.454, test accuracy:32.89%
+client5, test loss:7.796, test accuracy:88.18%
+client7, test loss:5.449, test accuracy:38.52%
+client7, test loss:2.297, test accuracy:69.67%
+global, test loss:45.581, test accuracy:40.17%
+ 68%|███████████████████████████████████████████▌                    | 68/100 [16:59<08:14, 15.45s/it]client12, test loss:14.114, test accuracy:47.34%
+client12, test loss:0.139, test accuracy:99.84%
+client5, test loss:20.006, test accuracy:58.42%
+client5, test loss:11.018, test accuracy:83.05%
+client13, test loss:28.279, test accuracy:17.90%
+client13, test loss:6.130, test accuracy:86.77%
+client11, test loss:22.888, test accuracy:35.76%
+client11, test loss:8.268, test accuracy:82.58%
+global, test loss:51.737, test accuracy:37.56%
+ 69%|████████████████████████████████████████████▏                   | 69/100 [17:15<08:10, 15.81s/it]client15, test loss:16.867, test accuracy:25.21%
+client15, test loss:3.477, test accuracy:86.15%
+client11, test loss:14.768, test accuracy:59.85%
+client11, test loss:9.035, test accuracy:81.06%
+client0, test loss:63.924, test accuracy:4.29%
+client0, test loss:0.704, test accuracy:99.33%
+client14, test loss:28.858, test accuracy:38.58%
+client14, test loss:7.068, test accuracy:88.13%
+global, test loss:49.503, test accuracy:38.00%
+ 70%|████████████████████████████████████████████▊                   | 70/100 [17:32<07:59, 15.99s/it]client6, test loss:44.556, test accuracy:24.97%
+client6, test loss:0.019, test accuracy:100.00%
+client2, test loss:3.756, test accuracy:40.22%
+client2, test loss:0.458, test accuracy:93.48%
+client17, test loss:13.227, test accuracy:40.57%
+client17, test loss:3.107, test accuracy:85.53%
+client5, test loss:35.396, test accuracy:28.99%
+client5, test loss:7.781, test accuracy:88.41%
+global, test loss:75.531, test accuracy:25.80%
+ 71%|█████████████████████████████████████████████▍                  | 71/100 [17:46<07:26, 15.40s/it]client16, test loss:28.861, test accuracy:4.48%
+client16, test loss:0.952, test accuracy:97.17%
+client4, test loss:26.332, test accuracy:49.83%
+client4, test loss:2.928, test accuracy:95.67%
+client0, test loss:66.557, test accuracy:2.29%
+client0, test loss:1.175, test accuracy:99.33%
+client10, test loss:38.610, test accuracy:7.40%
+client10, test loss:5.579, test accuracy:87.18%
+global, test loss:59.660, test accuracy:31.02%
+ 72%|██████████████████████████████████████████████                  | 72/100 [18:03<07:26, 15.94s/it]client5, test loss:35.311, test accuracy:25.53%
+client5, test loss:7.247, test accuracy:87.74%
+client1, test loss:24.043, test accuracy:52.91%
+client1, test loss:8.418, test accuracy:86.29%
+client17, test loss:24.281, test accuracy:6.72%
+client17, test loss:4.300, test accuracy:85.53%
+client4, test loss:15.317, test accuracy:65.26%
+client4, test loss:5.017, test accuracy:95.56%
+global, test loss:64.110, test accuracy:33.41%
+ 73%|██████████████████████████████████████████████▋                 | 73/100 [18:21<07:26, 16.52s/it]client17, test loss:11.833, test accuracy:63.82%
+client17, test loss:4.128, test accuracy:85.79%
+client12, test loss:50.733, test accuracy:1.45%
+client12, test loss:0.100, test accuracy:99.84%
+client13, test loss:27.818, test accuracy:27.26%
+client13, test loss:7.084, test accuracy:86.45%
+client1, test loss:26.805, test accuracy:42.63%
+client1, test loss:9.395, test accuracy:82.86%
+global, test loss:59.653, test accuracy:34.05%
+ 74%|███████████████████████████████████████████████▎                | 74/100 [18:36<06:59, 16.14s/it]client16, test loss:5.971, test accuracy:78.07%
+client16, test loss:1.041, test accuracy:97.17%
+client0, test loss:34.734, test accuracy:41.41%
+client0, test loss:0.575, test accuracy:99.33%
+client15, test loss:5.563, test accuracy:77.56%
+client15, test loss:4.123, test accuracy:85.87%
+client10, test loss:11.871, test accuracy:69.68%
+client10, test loss:7.726, test accuracy:85.56%
+global, test loss:72.073, test accuracy:26.54%
+ 75%|████████████████████████████████████████████████                | 75/100 [18:51<06:32, 15.70s/it]client19, test loss:12.131, test accuracy:19.00%
+client19, test loss:5.722, test accuracy:64.71%
+client11, test loss:44.482, test accuracy:9.24%
+client11, test loss:8.971, test accuracy:81.36%
+client0, test loss:7.532, test accuracy:82.82%
+client0, test loss:1.113, test accuracy:99.33%
+client3, test loss:78.516, test accuracy:1.80%
+client3, test loss:13.946, test accuracy:83.81%
+global, test loss:60.943, test accuracy:30.13%
+ 76%|████████████████████████████████████████████████▋               | 76/100 [19:08<06:29, 16.23s/it]client8, test loss:4.866, test accuracy:64.77%
+client8, test loss:4.227, test accuracy:76.14%
+client1, test loss:40.043, test accuracy:19.09%
+client1, test loss:8.250, test accuracy:84.34%
+client17, test loss:21.190, test accuracy:10.08%
+client17, test loss:7.489, test accuracy:86.30%
+client6, test loss:36.899, test accuracy:35.22%
+client6, test loss:0.020, test accuracy:100.00%
+global, test loss:61.233, test accuracy:30.78%
+ 77%|█████████████████████████████████████████████████▎              | 77/100 [19:22<05:59, 15.63s/it]client0, test loss:29.326, test accuracy:40.27%
+client0, test loss:0.766, test accuracy:99.33%
+client14, test loss:38.214, test accuracy:22.11%
+client14, test loss:6.436, test accuracy:88.43%
+client12, test loss:53.501, test accuracy:0.00%
+client12, test loss:0.156, test accuracy:99.84%
+client5, test loss:38.378, test accuracy:19.96%
+client5, test loss:7.122, test accuracy:86.96%
+global, test loss:51.711, test accuracy:33.81%
+ 78%|█████████████████████████████████████████████████▉              | 78/100 [19:41<06:03, 16.54s/it]client12, test loss:31.115, test accuracy:1.13%
+client12, test loss:0.125, test accuracy:99.84%
+client11, test loss:28.025, test accuracy:25.61%
+client11, test loss:9.527, test accuracy:81.67%
+client0, test loss:12.074, test accuracy:76.15%
+client0, test loss:0.813, test accuracy:99.33%
+client4, test loss:26.883, test accuracy:43.51%
+client4, test loss:3.408, test accuracy:96.12%
+global, test loss:56.645, test accuracy:29.83%
+ 79%|██████████████████████████████████████████████████▌             | 79/100 [20:00<06:00, 17.17s/it]client14, test loss:30.893, test accuracy:30.42%
+client14, test loss:10.555, test accuracy:88.13%
+client19, test loss:12.618, test accuracy:21.27%
+client19, test loss:5.920, test accuracy:66.97%
+client6, test loss:52.338, test accuracy:9.89%
+client6, test loss:0.020, test accuracy:100.00%
+client7, test loss:4.102, test accuracy:49.18%
+client7, test loss:2.276, test accuracy:71.31%
+global, test loss:69.107, test accuracy:25.26%
+ 80%|███████████████████████████████████████████████████▏            | 80/100 [20:12<05:14, 15.70s/it]client4, test loss:47.363, test accuracy:10.77%
+client4, test loss:3.587, test accuracy:95.45%
+client9, test loss:16.924, test accuracy:52.16%
+client9, test loss:1.405, test accuracy:95.68%
+client17, test loss:29.174, test accuracy:11.11%
+client17, test loss:4.714, test accuracy:85.53%
+client8, test loss:14.998, test accuracy:10.80%
+client8, test loss:3.500, test accuracy:80.68%
+global, test loss:58.501, test accuracy:29.48%
+ 81%|███████████████████████████████████████████████████▊            | 81/100 [20:25<04:44, 14.96s/it]client3, test loss:39.892, test accuracy:27.18%
+client3, test loss:12.595, test accuracy:84.00%
+client18, test loss:29.152, test accuracy:38.16%
+client18, test loss:2.907, test accuracy:95.17%
+client0, test loss:56.337, test accuracy:3.91%
+client0, test loss:0.579, test accuracy:99.33%
+client4, test loss:8.005, test accuracy:87.13%
+client4, test loss:3.636, test accuracy:95.34%
+global, test loss:54.772, test accuracy:33.89%
+ 82%|████████████████████████████████████████████████████▍           | 82/100 [20:47<05:05, 16.95s/it]client3, test loss:26.161, test accuracy:52.65%
+client3, test loss:12.570, test accuracy:84.19%
+client6, test loss:40.666, test accuracy:18.02%
+client6, test loss:0.018, test accuracy:100.00%
+client5, test loss:39.355, test accuracy:24.08%
+client5, test loss:7.152, test accuracy:88.29%
+client10, test loss:34.467, test accuracy:14.98%
+client10, test loss:5.057, test accuracy:85.92%
+global, test loss:56.931, test accuracy:31.00%
+ 83%|█████████████████████████████████████████████████████           | 83/100 [21:06<04:59, 17.62s/it]client7, test loss:5.884, test accuracy:34.43%
+client7, test loss:2.191, test accuracy:69.67%
+client13, test loss:21.370, test accuracy:46.29%
+client13, test loss:7.116, test accuracy:86.61%
+client3, test loss:19.773, test accuracy:63.35%
+client3, test loss:11.259, test accuracy:84.28%
+client15, test loss:24.011, test accuracy:11.36%
+client15, test loss:3.233, test accuracy:86.70%
+global, test loss:83.478, test accuracy:23.86%
+ 84%|█████████████████████████████████████████████████████▊          | 84/100 [21:20<04:22, 16.43s/it]client8, test loss:4.495, test accuracy:72.16%
+client8, test loss:3.012, test accuracy:78.41%
+client15, test loss:23.230, test accuracy:12.19%
+client15, test loss:3.944, test accuracy:87.26%
+client3, test loss:12.289, test accuracy:80.02%
+client3, test loss:11.424, test accuracy:84.66%
+client13, test loss:8.557, test accuracy:76.77%
+client13, test loss:5.670, test accuracy:87.74%
+global, test loss:88.668, test accuracy:23.31%
+ 85%|██████████████████████████████████████████████████████▍         | 85/100 [21:33<03:55, 15.68s/it]client15, test loss:22.598, test accuracy:12.47%
+client15, test loss:3.250, test accuracy:87.81%
+client16, test loss:30.306, test accuracy:5.42%
+client16, test loss:0.829, test accuracy:97.41%
+client5, test loss:77.469, test accuracy:4.01%
+client5, test loss:8.242, test accuracy:87.63%
+client18, test loss:79.683, test accuracy:4.02%
+client18, test loss:4.238, test accuracy:94.37%
+global, test loss:48.292, test accuracy:37.58%
+ 86%|███████████████████████████████████████████████████████         | 86/100 [21:49<03:38, 15.62s/it]client16, test loss:10.276, test accuracy:55.66%
+client16, test loss:1.056, test accuracy:97.17%
+client17, test loss:10.196, test accuracy:55.56%
+client17, test loss:4.583, test accuracy:85.79%
+client19, test loss:8.974, test accuracy:32.13%
+client19, test loss:5.478, test accuracy:65.61%
+client6, test loss:31.518, test accuracy:34.51%
+client6, test loss:0.020, test accuracy:100.00%
+global, test loss:68.305, test accuracy:23.36%
+ 87%|███████████████████████████████████████████████████████▋        | 87/100 [22:01<03:10, 14.65s/it]client1, test loss:36.414, test accuracy:27.89%
+client1, test loss:8.592, test accuracy:84.34%
+client2, test loss:4.488, test accuracy:22.83%
+client2, test loss:0.646, test accuracy:95.65%
+client6, test loss:5.482, test accuracy:89.16%
+client6, test loss:0.022, test accuracy:100.00%
+client5, test loss:37.796, test accuracy:28.43%
+client5, test loss:8.480, test accuracy:88.74%
+global, test loss:62.360, test accuracy:32.54%
+ 88%|████████████████████████████████████████████████████████▎       | 88/100 [22:18<03:01, 15.13s/it]client5, test loss:18.316, test accuracy:65.66%
+client5, test loss:7.263, test accuracy:88.18%
+client19, test loss:8.060, test accuracy:37.56%
+client19, test loss:5.445, test accuracy:67.42%
+client0, test loss:53.007, test accuracy:9.92%
+client0, test loss:0.804, test accuracy:99.33%
+client9, test loss:38.986, test accuracy:10.30%
+client9, test loss:1.415, test accuracy:95.68%
+global, test loss:54.933, test accuracy:34.35%
+ 89%|████████████████████████████████████████████████████████▉       | 89/100 [22:34<02:51, 15.55s/it]client9, test loss:18.684, test accuracy:40.53%
+client9, test loss:1.253, test accuracy:95.35%
+client0, test loss:10.755, test accuracy:79.68%
+client0, test loss:0.793, test accuracy:99.33%
+client5, test loss:16.973, test accuracy:60.65%
+client5, test loss:7.772, test accuracy:88.96%
+client11, test loss:25.906, test accuracy:32.27%
+client11, test loss:8.860, test accuracy:81.06%
+global, test loss:56.478, test accuracy:35.51%
+ 90%|█████████████████████████████████████████████████████████▌      | 90/100 [22:53<02:44, 16.46s/it]client13, test loss:39.165, test accuracy:12.74%
+client13, test loss:6.030, test accuracy:86.13%
+client18, test loss:47.770, test accuracy:18.28%
+client18, test loss:3.888, test accuracy:94.94%
+client7, test loss:5.552, test accuracy:36.89%
+client7, test loss:2.513, test accuracy:70.49%
+client4, test loss:21.223, test accuracy:52.94%
+client4, test loss:3.545, test accuracy:95.67%
+global, test loss:61.560, test accuracy:31.45%
+ 91%|██████████████████████████████████████████████████████████▏     | 91/100 [23:08<02:25, 16.11s/it]client3, test loss:46.271, test accuracy:21.50%
+client3, test loss:11.552, test accuracy:84.85%
+client14, test loss:20.556, test accuracy:49.85%
+client14, test loss:6.347, test accuracy:87.98%
+client16, test loss:29.577, test accuracy:3.07%
+client16, test loss:0.765, test accuracy:97.17%
+client11, test loss:36.883, test accuracy:9.70%
+client11, test loss:9.626, test accuracy:79.70%
+global, test loss:67.838, test accuracy:29.16%
+ 92%|██████████████████████████████████████████████████████████▉     | 92/100 [23:25<02:10, 16.29s/it]client14, test loss:20.503, test accuracy:54.60%
+client14, test loss:6.608, test accuracy:87.83%
+client9, test loss:16.640, test accuracy:48.01%
+client9, test loss:1.454, test accuracy:96.01%
+client18, test loss:49.457, test accuracy:19.77%
+client18, test loss:2.778, test accuracy:95.63%
+client10, test loss:26.496, test accuracy:19.86%
+client10, test loss:5.359, test accuracy:85.74%
+global, test loss:71.545, test accuracy:28.40%
+ 93%|███████████████████████████████████████████████████████████▌    | 93/100 [23:41<01:53, 16.25s/it]client18, test loss:9.845, test accuracy:77.13%
+client18, test loss:3.474, test accuracy:94.71%
+client4, test loss:64.646, test accuracy:5.44%
+client4, test loss:3.849, test accuracy:95.78%
+client7, test loss:6.858, test accuracy:30.33%
+client7, test loss:2.476, test accuracy:69.67%
+client15, test loss:11.806, test accuracy:44.04%
+client15, test loss:3.804, test accuracy:86.15%
+global, test loss:68.663, test accuracy:29.35%
+ 94%|████████████████████████████████████████████████████████████▏   | 94/100 [23:55<01:33, 15.62s/it]client13, test loss:25.213, test accuracy:30.97%
+client13, test loss:6.261, test accuracy:86.61%
+client6, test loss:66.965, test accuracy:2.71%
+client6, test loss:0.018, test accuracy:100.00%
+client18, test loss:10.509, test accuracy:75.63%
+client18, test loss:3.137, test accuracy:95.29%
+client15, test loss:22.067, test accuracy:13.30%
+client15, test loss:3.496, test accuracy:86.15%
+global, test loss:58.687, test accuracy:30.07%
+ 95%|████████████████████████████████████████████████████████████▊   | 95/100 [24:11<01:18, 15.79s/it]client19, test loss:6.202, test accuracy:47.06%
+client19, test loss:4.906, test accuracy:64.71%
+client6, test loss:23.499, test accuracy:37.22%
+client6, test loss:0.019, test accuracy:100.00%
+client8, test loss:12.439, test accuracy:6.82%
+client8, test loss:4.102, test accuracy:73.86%
+client7, test loss:4.964, test accuracy:40.98%
+client7, test loss:2.048, test accuracy:76.23%
+global, test loss:110.569, test accuracy:11.87%
+ 96%|█████████████████████████████████████████████████████████████▍  | 96/100 [24:21<00:56, 14.04s/it]client1, test loss:73.325, test accuracy:1.26%
+client1, test loss:9.160, test accuracy:83.77%
+client4, test loss:70.044, test accuracy:0.55%
+client4, test loss:3.666, test accuracy:95.45%
+client3, test loss:73.241, test accuracy:15.72%
+client3, test loss:10.637, test accuracy:84.56%
+client0, test loss:110.624, test accuracy:0.67%
+client0, test loss:0.255, test accuracy:99.33%
+global, test loss:54.068, test accuracy:35.35%
+ 97%|██████████████████████████████████████████████████████████████  | 97/100 [24:43<00:48, 16.33s/it]client10, test loss:21.547, test accuracy:32.13%
+client10, test loss:5.119, test accuracy:86.10%
+client7, test loss:4.944, test accuracy:43.44%
+client7, test loss:2.461, test accuracy:76.23%
+client5, test loss:52.342, test accuracy:25.08%
+client5, test loss:7.668, test accuracy:89.19%
+client1, test loss:24.897, test accuracy:45.49%
+client1, test loss:8.801, test accuracy:84.69%
+global, test loss:59.230, test accuracy:36.84%
+ 98%|██████████████████████████████████████████████████████████████▋ | 98/100 [24:58<00:31, 15.95s/it]client1, test loss:11.867, test accuracy:75.54%
+client1, test loss:8.955, test accuracy:83.77%
+client7, test loss:7.209, test accuracy:35.25%
+client7, test loss:2.176, test accuracy:68.85%
+client13, test loss:34.206, test accuracy:18.23%
+client13, test loss:6.803, test accuracy:86.61%
+client19, test loss:8.512, test accuracy:45.25%
+client19, test loss:5.513, test accuracy:65.16%
+global, test loss:72.143, test accuracy:33.20%
+ 99%|███████████████████████████████████████████████████████████████▎| 99/100 [25:10<00:14, 14.81s/it]client9, test loss:30.175, test accuracy:21.93%
+client9, test loss:1.831, test accuracy:95.85%
+client0, test loss:36.118, test accuracy:46.56%
+client0, test loss:0.662, test accuracy:99.33%
+client12, test loss:60.926, test accuracy:0.00%
+client12, test loss:0.179, test accuracy:99.84%
+client14, test loss:14.205, test accuracy:60.24%
+client14, test loss:6.125, test accuracy:88.28%
+global, test loss:56.893, test accuracy:30.19%
+100%|███████████████████████████████████████████████████████████████| 100/100 [25:27<00:00, 15.28s/it]
+global, test loss:56.871, test accuracy:30.19%
