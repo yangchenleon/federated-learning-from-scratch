@@ -2,40 +2,47 @@ import os, json, pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
-from .datasets import DatasetDict
-from .setting import data_dict
-from .schemes import iid_partition, dirichlet, pathological
+from data.utils.datasets import DatasetDict
+from data.utils.schemes import *
+from data.utils.setting import par_dict
 
-def partition_data(dataset, args):
+def partition_data(dataset, args, save=True, draw=False):
     '''
     niid: non-iid, the classes for client are random (while the number of samples is fixed [this can be appointed]), include 'balance', which is about the number
     balance: if True, the number of samples for each class is the same
     partition: two options['pat': pathologic, 'dir': Dirichlet, 'mix': mix]
     1. if niid, partion is useless. 2. if partition is dir, balance is useless.
     '''
-    dataset = DatasetDict[dataset](root=data_dict[dataset], transform=None)
+    path = par_dict[dataset]
+    dataset = DatasetDict[dataset](transform=None)
     labels = dataset.targets
-    num_client, iid, balance, partition, alpha, num_class_client, least_samples = args.num_client, args.iid, args.balance, args.partition, args.alpha, args.num_class_client, args.least_samples
     
-    if iid:
-        idx_sample_client = iid_partition(dataset, num_client, num_class_client, balance, least_samples)
-    
-    elif partition == 'pat':
-        idx_sample_client = pathological(dataset, num_client, num_class_client, balance, least_samples)
-        
-    elif partition == 'dir':
-        idx_sample_client = dirichlet(dataset, num_client, alpha)
+    if args.partition == 'iid':
+        idx_sample_client = iid_partition(dataset, args.num_client)
+    elif args.partition == 'pat':
+        idx_sample_client = pathological(dataset, args.num_client, args.num_class_client, args.balance, args.least_samples)
+    elif args.partition == 'dir':
+        idx_sample_client = dirichlet(dataset, args.num_client, args.alpha)
+    elif args.partition == 'rad':
+        idx_sample_client = randomly_assign_classes(dataset, args.num_client, args.num_class_client)
+    elif args.partition == 'srd':
+        idx_sample_client = allocate_shards(dataset, args.num_client, shard_num=args.num_class_client)
     else:
         raise NotImplementedError
     
-    # lazyness, global statistic, no train/test split
-    statistic_client = [[] for _ in range(num_client)]
-    for i in range(num_client):
+    # global statistic, no train/test split, also actually no need, cause the train/test in a client usually is iid
+    statistic_client = [[] for _ in range(args.num_client)]
+    for i in range(args.num_client): # [client1[(label1, num_label1),()...], client2[()]] 
         label_client = labels[idx_sample_client[i]]
         for label in np.unique(label_client):
             statistic_client[i].append((int(label), int(sum(label_client==label))))
 
     idx_sample_client = split_data(idx_sample_client, train_size=args.train_size)
+
+    if save:
+        save_partition(idx_sample_client, statistic_client, args, path)
+    if draw:
+        draw_distribution(dataset, idx_sample_client, args, path)
     
     return idx_sample_client, statistic_client
 
@@ -65,13 +72,15 @@ def save_partition(partition, stats, args, path):
     with open(os.path.join(path, "args.json"), "w") as f:
         json.dump(vars(args), f)
     
-def draw_distribution(dataset,  partition):
-    dataset = DatasetDict[dataset](root=data_dict[dataset], transform=None)
+def draw_distribution(dataset, partition, args, path):
     labels = dataset.targets
     name_class = dataset.classes
     num_client = len(partition)
     num_class = len(name_class)
-    partition = [partition[i]['train'] for i in range(num_client)]
+    partition = [partition[i]['train'] for i in range(num_client)] #  + partition[i]['test'], but one is enough
+
+    if not os.path.exists(path):
+        os.makedirs(path)
 
     plt.figure(figsize=(12, 8))
     label_distribution = [[] for _ in range(num_class)]
@@ -87,5 +96,6 @@ def draw_distribution(dataset,  partition):
     plt.ylabel("Number of samples")
     plt.legend(loc="upper right")
     plt.title("Display Label Distribution on Different Clients")
+    plt.savefig(os.path.join(path, f'{type(dataset).__name__[6:]}_{args.num_client}_{args.partition}.png'))
     plt.show()
 

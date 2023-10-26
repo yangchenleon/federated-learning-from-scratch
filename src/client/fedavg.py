@@ -43,8 +43,9 @@ class Client(object):
         '''
         default data_path is fixed in datasets, only set partition dir
         read partition and load train/test dataset
+        wired huh! why not direct pass the datast class, because i want allow client to apply it's own transform, which can't be changed into dataset is created
         '''
-        dataset = DatasetDict[self.dataset](transform=transform, target_transform=target_transform)
+        dataset = DatasetDict[self.dataset](transform=transform, target_transform=target_transform) 
         with open(os.path.join(par_dict[self.dataset], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
         self.trainset = CustomSubset(dataset, partition[self.id]['train'])

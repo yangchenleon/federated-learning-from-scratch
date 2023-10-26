@@ -112,10 +112,27 @@ class ResNet18(nn.Module):
         x = self.base(x)
         x = self.classifier(x)
         return x
+    
+class MobileNetV2(nn.Module):
+    def __init__(self, dataset, pretrained=False):
+        output_dim = data_info[dataset][2]
+        super(MobileNetV2, self).__init__()
+        self.base = torchvision.models.mobilenet_v2(
+            weights=torchvision.models.MobileNet_V2_Weights.IMAGENET1K_V2 if pretrained else None
+        )
+        self.classifier = nn.Linear(self.base.classifier[-1].in_features, output_dim)
+
+        self.base.classifier[-1] = nn.Identity()
+
+    def forward(self, x):
+        x = self.base(x)
+        x = self.classifier(x)
+        return x
 
 ModelDict = {
     'mlp': MLP,
     'alexnet': AlexNet,
     'resnet18': ResNet18,
-    'peralex': PerAlexNet, 
+    'peralex': PerAlexNet,
+    'mobile': MobileNetV2
 }

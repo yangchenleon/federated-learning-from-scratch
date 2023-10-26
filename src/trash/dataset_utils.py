@@ -188,3 +188,16 @@ if __name__ == "__main__":
     partition = partition_data((dataset_image, dataset_label), num_client, **partition_setting)
     # draw_distribution((dataset_image, dataset_label), name_class, partition)
     save_partition((dataset_image, dataset_label), partition, partition_setting, path='datasets/_ClientData')
+
+# -----------------
+# 以上是首次尝试，有点杂，大部分参考Non-IID-PFL，pat划分不太对的应该是，dir直接copy，很多参数都没用上，但是放在同一个函数下，后面就分开了；以及直接保存的划分数据集，保存和读取起来有点笨重，后面仅保存partition pkl，即用即读。
+# 后面是再修改，已经拆分模块了，但是感觉还是有问题，包括iid的划分直接通用pat的方法，而pat方法本身就感觉有点不靠谱，dir方法一方面算法本身没有利用一些参数，虽然说是官方的，总感觉还可以改进。
+# --------- 
+def iid_partition(dataset, num_client, balance, least_samples):
+    labels = dataset.targets
+    num_class = len(dataset.classes)
+    idx_sample_client = [[] for _ in range(num_client)]
+
+    idx_sample_client = pathological(dataset, num_client, num_class_client=num_class, balance=balance, least_samples=least_samples)
+
+    return idx_sample_client
