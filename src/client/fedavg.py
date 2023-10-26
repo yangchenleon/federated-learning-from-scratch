@@ -7,6 +7,7 @@ from src.models.models import ModelDict
 from data.utils.setting import par_dict
 from src.utils.setting import state_dir
 
+
 class Client(object):
     '''
     also as FedAvgClient
@@ -34,7 +35,8 @@ class Client(object):
             self.model.parameters(), 
             lr=args.lr, 
             momentum=args.momentum, 
-            weight_decay=args.weight_decay)
+            weight_decay=args.weight_decay
+        )
         self.criterion = torch.nn.CrossEntropyLoss()
 
         self.file_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
@@ -45,7 +47,7 @@ class Client(object):
         read partition and load train/test dataset
         wired huh! why not direct pass the datast class, because i want allow client to apply it's own transform, which can't be changed into dataset is created
         '''
-        dataset = DatasetDict[self.dataset](transform=transform, target_transform=target_transform) 
+        dataset = DatasetDict[self.dataset](transform=transform) 
         with open(os.path.join(par_dict[self.dataset], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
         self.trainset = CustomSubset(dataset, partition[self.id]['train'])
@@ -72,10 +74,10 @@ class Client(object):
 
     def train(self, save=True):
         self.model.train()
-        for epoch in (range(0, self.args.num_epochs)): # tqdm optional
+        for epoch in range(0, self.args.num_epochs): # tqdm optional, not recommend
             num_sample, ls, acc = 0, 0, 0
             # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
-            for X, y in (self.trainloader):
+            for X, y in (self.trainloader): # tqdm optional, not recommend
                 X, y = X.to(self.device), y.to(self.device)
                 output = self.model(X)
                 loss = self.criterion(output, y)
@@ -88,6 +90,7 @@ class Client(object):
                 num_sample += len(y) # same as y.size(0), y.shape[0]
 
             # print(f'{self.id}_epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
+        
         if save:
             self.save_state()
             
@@ -106,7 +109,7 @@ class Client(object):
                 
         acc = acc / num_samples * 100
         ls = ls / num_samples
-        print(f'client{self.id}, test loss:{ls:.3f}, test accuracy:{acc:.2f}%')
+        # print(f'client{self.id}, test loss:{ls:.3f}, test accuracy:{acc:.2f}%')
         
         return ls, acc
     

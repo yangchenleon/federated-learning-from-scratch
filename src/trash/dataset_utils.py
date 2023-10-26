@@ -201,3 +201,11 @@ def iid_partition(dataset, num_client, balance, least_samples):
     idx_sample_client = pathological(dataset, num_client, num_class_client=num_class, balance=balance, least_samples=least_samples)
 
     return idx_sample_client
+
+# -------------
+# global statistic, no train/test split, also actually no need, cause the train/test in a client usually is iid
+statistic_client = [[] for _ in range(args.num_client)]
+for i in range(args.num_client): # [client1[(label1, num_label1),()...], client2[()]] 
+    label_client = labels[idx_sample_client[i]]
+    for label in np.unique(label_client):
+        statistic_client[i].append((int(label), int(sum(label_client==label))))

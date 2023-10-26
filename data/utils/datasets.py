@@ -46,8 +46,8 @@ class CustomMNIST(CustomDataset):
         trainset = torchvision.datasets.MNIST(root, train=True, download=True)
         testset = torchvision.datasets.MNIST(root, train=False, download=True)
         # here actually trainset.data is already a tensor, no need to torch.tensor()
-        train_data = torch.Tensor(trainset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3]) # add channel dim    
-        test_data = torch.Tensor(testset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3])
+        train_data = torch.Tensor(trainset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3]) # add channel dim to apply most model
+        test_data = torch.Tensor(testset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3]) 
         train_targets = torch.Tensor(trainset.targets).squeeze()
         test_targets = torch.Tensor(testset.targets).squeeze()
 

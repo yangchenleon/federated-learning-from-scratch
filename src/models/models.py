@@ -1,15 +1,15 @@
 import os
-os.environ['TORCH_HOME']='results/pretrained/'
 import torch, torchvision
 import torch.nn as nn
 import torch.nn.functional as F
 from data.utils.setting import data_info
 
+os.environ['TORCH_HOME']='results/pretrained/'
+
 
 class MLP(nn.Module):
-    def __init__(self, dataset, pretrained):
+    def __init__(self, dataset, pretrained=False):
         super(MLP, self).__init__()
-        pretrained = False
         input_dim = data_info[dataset][0] * data_info[dataset][1]
         output_dim = data_info[dataset][2]
         self.flat = nn.Flatten()
@@ -36,11 +36,10 @@ class MLP(nn.Module):
                 # nn.init.xavier_normal_(layer.weight.data)
 
 class PerAlexNet(nn.Module):
-    def __init__(self, dataset, pretrained):
+    def __init__(self, dataset, pretrained=False):
         super(PerAlexNet, self).__init__()
         input_dim = data_info[dataset][0]
         output_dim = data_info[dataset][2]
-        pretrained = False
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
@@ -73,6 +72,33 @@ class PerAlexNet(nn.Module):
         x = torch.flatten(x, 1)
         x = self.classifier(x)
         x = self.fc(x)
+        return x
+    
+class CNN(nn.Module):
+    def __init__(self, dataset, pretrained=False):
+        input_dim = data_info[dataset][0]
+        hidden_dim = data_info[dataset][1]
+        output_dim = data_info[dataset][2]
+        super(CNN, self).__init__() # channel dim
+        self.base = nn.Sequential(
+            nn.Conv2d(input_dim, 32, 5),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(32, 64, 5),
+            nn.ReLU(),
+            # nn.MaxPool2d(2),
+
+            nn.AdaptiveAvgPool2d((5, 5)),
+            nn.Flatten(),
+            nn.Linear(64 * 5 * 5, 512),
+        )
+        self.classifier = nn.Sequential(
+            nn.ReLU(),
+            nn.Linear(512, output_dim)
+        )
+    def forward(self, x):
+        x = self.base(x)
+        x = self.classifier(x)
         return x
 
 class AlexNet(nn.Module):
@@ -131,8 +157,9 @@ class MobileNetV2(nn.Module):
 
 ModelDict = {
     'mlp': MLP,
+    'cnn': CNN,
     'alexnet': AlexNet,
     'resnet18': ResNet18,
     'peralex': PerAlexNet,
-    'mobile': MobileNetV2
+    'mobile': MobileNetV2,
 }

@@ -1,18 +1,14 @@
-import os, pickle
 import numpy as np
-import torch, torchvision
-from argparse import ArgumentParser
 from torchvision import transforms
-from data.utils.datasets import DatasetDict, CustomSubset
-from data.utils.setting import par_dict, data_dict
-from data.utils.dataset_utils import partition_data, save_partition, draw_distribution
-from src.client.fedavg import Client
+from argparse import ArgumentParser
+
+from data.utils.dataset_utils import partition_data
 from src.server.fedavg import FedAvgServer
+
 
 if __name__ == "__main__":
     np.random.seed(42)
     parser = ArgumentParser()
-    parser.add_argument('-d', '--dataset', type=str, choices=['minst'])
     parser.add_argument('-n', '--num_client', type=int, default=20)
     parser.add_argument('--balance', type=int, default=1) # actually only impl pat imbalance
     parser.add_argument('--partition', type=str, choices=['iid', 'pat', 'dir', 'mix', 'rad', 'srd'], default='iid')
@@ -21,9 +17,9 @@ if __name__ == "__main__":
     parser.add_argument('-ls', '--least_samples', type=int, default=40)
     parser.add_argument('-ts', '--train_size', type=float, default=0.8)
 
-    # mlp: 0.1, alexnet: 0.01
+    # mlp: 0.1, alexnet: 0.01, cnn: 0.001
     parser.add_argument('-pt', '--pretrained', type=int, default=0)
-    parser.add_argument('-lr', '--lr', type=float,  default=1e-2)
+    parser.add_argument('-lr', '--lr', type=float,  default=1e-3)
     parser.add_argument('-wd', '--weight_decay', type=float, default=0.0)
     parser.add_argument('-bs', '--batch_size', type=int, default=32)
     parser.add_argument('-mom', '--momentum', type=float, default=0.0)
@@ -34,8 +30,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    datasets = ['cifar10']
-    models = ['mobile']
+    datasets = ['mnist']
+    models = ['cnn']
     partition, stats = partition_data(datasets[0], args, draw=True)
     # exit()
 

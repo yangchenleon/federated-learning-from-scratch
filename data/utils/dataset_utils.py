@@ -1,10 +1,12 @@
 import os, json, pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import Counter
 
+from data.utils.setting import par_dict
 from data.utils.datasets import DatasetDict
 from data.utils.schemes import *
-from data.utils.setting import par_dict
+
 
 def partition_data(dataset, args, save=True, draw=False):
     '''
@@ -15,7 +17,6 @@ def partition_data(dataset, args, save=True, draw=False):
     '''
     path = par_dict[dataset]
     dataset = DatasetDict[dataset](transform=None)
-    labels = dataset.targets
     
     if args.partition == 'iid':
         idx_sample_client = iid_partition(dataset, args.num_client)
@@ -30,34 +31,42 @@ def partition_data(dataset, args, save=True, draw=False):
     else:
         raise NotImplementedError
     
-    # global statistic, no train/test split, also actually no need, cause the train/test in a client usually is iid
-    statistic_client = [[] for _ in range(args.num_client)]
-    for i in range(args.num_client): # [client1[(label1, num_label1),()...], client2[()]] 
-        label_client = labels[idx_sample_client[i]]
-        for label in np.unique(label_client):
-            statistic_client[i].append((int(label), int(sum(label_client==label))))
-
-    idx_sample_client = split_data(idx_sample_client, train_size=args.train_size)
-
+    partition = idx_sample_client
+    statistic_client = statistic(dataset, partition, args)
+    split_partition = split_data(idx_sample_client, train_size=args.train_size)
+        
     if save:
-        save_partition(idx_sample_client, statistic_client, args, path)
+        save_partition(split_partition, statistic_client, args, path)
     if draw:
-        draw_distribution(dataset, idx_sample_client, args, path)
+        draw_distribution(dataset, partition, args, path)
     
-    return idx_sample_client, statistic_client
+    return split_partition, statistic_client
 
 def split_data(partition, train_size=0.8):
+    split_partition = [None for _ in range(len(partition))]
     for client, idx_sample_client in enumerate(partition):
         num_train = int(len(idx_sample_client) * train_size)
         np.random.shuffle(idx_sample_client)
         idx_train, idx_test = idx_sample_client[:num_train], idx_sample_client[num_train:]
-        partition[client] = {'train': idx_train, 'test': idx_test}
+        split_partition[client] = {'train': idx_train, 'test': idx_test}
+        # amazing here, if inplace operation (partition[client]={'train'...}), though new_place = split_data，the input para partition will change
 
-        # num_train, num_test = len(partition[client]['train']), len(partition[client]['test'])
-        # print("Total number of samples:", num_train + num_test)
-        # print("The number of train samples:", num_train)
-        # print("The number of test samples:", num_test)
-    return partition
+    return split_partition
+
+def statistic(dataset, partition, args):
+    stats = {}
+    labels = dataset.targets
+
+    for i in range(args.num_client): # [client1[(label1, num_label1),()...], client2[()]]
+        label_client = labels[partition[i]]
+        stats[i] = {}
+        stats[i]['num_sample'] = len(label_client)
+        stats[i]['class_count'] = Counter(label_client.tolist())
+    num_samples = np.array(list(map(lambda stat_i: stat_i['num_sample'], stats.values())))
+    stats["sample_per_client"] = {"std": num_samples.mean(), "stddev": num_samples.std()}
+    # honestly dont know what sample_per_client for 
+
+    return stats
 
 def save_partition(partition, stats, args, path):
     if not os.path.exists(path):
@@ -77,7 +86,6 @@ def draw_distribution(dataset, partition, args, path):
     name_class = dataset.classes
     num_client = len(partition)
     num_class = len(name_class)
-    partition = [partition[i]['train'] for i in range(num_client)] #  + partition[i]['test'], but one is enough
 
     if not os.path.exists(path):
         os.makedirs(path)

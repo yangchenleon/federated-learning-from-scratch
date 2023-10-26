@@ -1,18 +1,20 @@
 import random, os, pickle, json
-import numpy as np
 import torch
+import numpy as np
 from tqdm import tqdm
 
-from data.utils.datasets import DatasetDict, CustomSubset
-from src.client.fedavg import Client
-from src.models.models import ModelDict
-from src.utils.setting import state_dir, curve_dir
 from data.utils.setting import par_dict
+from data.utils.datasets import DatasetDict, CustomSubset
+from src.utils.setting import state_dir, curve_dir
+from src.utils.model_utils import get_best_device
+from src.models.models import ModelDict
+from src.client.fedavg import Client
+
 
 class FedAvgServer(object):
     def __init__(self, datasets, models, args):
         self.args = args
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device = get_best_device(True)
         
         self.num_client = self.args.num_client
         self.num_selected = max(1, int(self.args.join_ratio * self.num_client))
@@ -42,7 +44,7 @@ class FedAvgServer(object):
     
     def load_testset(self, transform=None, target_transform=None):
         self.gtrans = transform
-        dataset = DatasetDict[self.gdataset](transform=self.gtrans, target_transform=target_transform)
+        dataset = DatasetDict[self.gdataset](transform=self.gtrans)
         with open(os.path.join(par_dict[self.gdataset], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
         test_indices = np.concatenate([client['test'] for client in partition])
@@ -63,9 +65,12 @@ class FedAvgServer(object):
             client = self.trainer(client_id, dataset, model, self.args, None, self.device)
             client.receive(self.global_model)
             client.load_dataset(transform=self.gtrans)  # here apply global trans
-            client.eval()
+            
+            old_ls, old_acc = client.eval()
             client.train(save=False)
-            client.eval()
+            new_ls, new_acc = client.eval()
+            
+            print(f'client{client_id:02d}, test loss:{old_ls:.2f}->{new_ls:.2f}, test accuracy:{old_acc:.2f}%->{new_acc:.2f}%')
             self.recive(client.upload())
     
     def train(self, save=True):
@@ -73,6 +78,7 @@ class FedAvgServer(object):
             self.round_train(round)
             self.aggregate()
             self.evaluate()
+        
         if save:
             self.save_state()
 
