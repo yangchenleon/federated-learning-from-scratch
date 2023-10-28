@@ -29,8 +29,8 @@ obj = SonClass('666', 2323)
 # obj.fuck()
 
 obj = MyClass('suck')
-obj.my_method('duck')
-obj.printextra()
+# obj.my_method('duck')
+# obj.printextra()
 
 # ------------------------------------
 import torch
@@ -288,5 +288,32 @@ a = random.choices([1], k=5)
 # ------------------------------------
 a = {'yi': 1, 'er':2, 'san':3}
 b = [3,2,1]
-for  val, num in zip(a, b):
-    print( val, num)
+# for  val, num in zip(a, b):
+    # print( val, num)
+
+# ------------------------------------
+import logging
+
+# 创建logger实例
+logger = logging.getLogger('Federated Learning')
+logger.setLevel(logging.INFO)
+
+# 创建文件处理器
+file_handler = logging.FileHandler('federated_learning.log')
+
+# 设置日志格式
+formatter = logging.Formatter('%(relativeCreated)s - %(message)s', '%H:%M:%S')
+file_handler.setFormatter(formatter)
+
+# 将文件处理器添加到logger
+logger.addHandler(file_handler)
+
+# 在代码中使用logger记录日志
+logger.info('Federated learning process started.')
+logger.debug('Debug information.')
+logger.warning('Warning message.')
+logger.error('Error message.')
+
+# 移除处理器和关闭文件处理器
+logger.removeHandler(file_handler)
+file_handler.close()

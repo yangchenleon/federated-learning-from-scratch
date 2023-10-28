@@ -1,4 +1,4 @@
-import os
+import os, logging
 import torch
 import pynvml
 import numpy as np
@@ -31,3 +31,24 @@ def get_best_device(use_cuda: bool) -> torch.device:
     gpu_memory = np.array(gpu_memory)
     best_gpu_id = np.argmax(gpu_memory)
     return torch.device(f"cuda:{best_gpu_id}")
+
+class Logger:
+    def __init__(self, logfile):
+        self.logger = logging.getLogger('Federated Learning')
+        self.logger.setLevel(logging.INFO)
+           
+        file_handler = logging.FileHandler(logfile)
+        console_handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(message)s', '%H:%M:%S')  # %(relativeCreated)d
+
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        self.logger.addHandler(file_handler)
+        # self.logger.addHandler(console_handler)
+
+    def log(self, message):
+        self.logger.info(message)
+
+    def close_log(self):
+        self.logger.removeHandler(self.file_handler)
+        self.file_handler.close()

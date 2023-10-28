@@ -38,10 +38,9 @@ class Client(object):
             weight_decay=args.weight_decay
         )
         self.criterion = torch.nn.CrossEntropyLoss()
-
         self.file_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
 
-    def load_dataset(self, transform=None, target_transform=None):
+    def load_dataset(self, transform=None):
         '''
         default data_path is fixed in datasets, only set partition dir
         read partition and load train/test dataset
@@ -74,6 +73,7 @@ class Client(object):
 
     def train(self, save=True):
         self.model.train()
+        train_ls, train_acc = [], []
         for epoch in range(0, self.args.num_epochs): # tqdm optional, not recommend
             num_sample, ls, acc = 0, 0, 0
             # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
@@ -88,11 +88,15 @@ class Client(object):
                 acc += (torch.argmax(output.detach(), dim=1) == y).sum().item()
                 ls += loss.item() * y.size(0)
                 num_sample += len(y) # same as y.size(0), y.shape[0]
-
-            # print(f'{self.id}_epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
+            
+            train_ls.append(ls/num_sample)
+            train_acc.append(acc/num_sample*100)
+            # self.logger.log(f'{self.id}_epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
         
         if save:
             self.save_state()
+
+        return train_ls, train_acc
             
     def eval(self):
         self.model.eval()
@@ -105,7 +109,7 @@ class Client(object):
                 
                 num_samples += y.size(0)
                 ls += loss.item() * num_samples # reduction is mean by default
-                acc += (torch.argmax(output.detach(), dim=1) == y).sum()
+                acc += (torch.argmax(output.detach(), dim=1) == y).sum().item()
                 
         acc = acc / num_samples * 100
         ls = ls / num_samples
@@ -118,7 +122,8 @@ class Client(object):
             'trained_epoch': self.trained_epoch,
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
-            }, state_dir+self.file_midname+f'_{self.trained_epoch}.pth')
+            }, state_dir+self.file_midname+f'_{self.trained_epoch}.pth'
+        )
     
     def load_state(self, ckptfile):
         ckpt = torch.load(ckptfile)

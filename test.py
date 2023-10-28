@@ -25,8 +25,8 @@ if __name__ == "__main__":
     parser.add_argument('-mom', '--momentum', type=float, default=0.0)
     parser.add_argument('-ne', '--num_epochs', type=int, default=5)
 
-    parser.add_argument('-jt', '--join_ratio', type=float, default=0.2)
-    parser.add_argument('-gr', '--global_round', type=int, default=25)
+    parser.add_argument('-jt', '--join_ratio', type=float, default=0.1)
+    parser.add_argument('-gr', '--global_round', type=int, default=2)
 
     args = parser.parse_args()
 
@@ -44,8 +44,6 @@ if __name__ == "__main__":
     server = FedAvgServer(datasets, models, args)
     server.load_testset(transform=trans)
     server.train()
-    # server.load_state()
-    server.evaluate()
 
 
     # log，即各种参数设置
