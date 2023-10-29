@@ -1,10 +1,11 @@
 import os, pickle
 import torch
+from torchvision import transforms
 from tqdm import tqdm
 
 from data.utils.datasets import DatasetDict, CustomSubset
+from data.utils.setting import par_dict, MEAN, STD
 from src.models.models import ModelDict
-from data.utils.setting import par_dict
 from src.utils.setting import state_dir
 
 
@@ -20,7 +21,7 @@ class Client(object):
         self.device = device
         self.logger = logger
         self.id = client_id
-        self.dataset = dataset
+        self.dataset_name = dataset
         
         self.trainset = None
         self.trainset = None
@@ -28,49 +29,21 @@ class Client(object):
         self.testloader = None
         
         self.trained_epoch = 0 # maintain at server
-        self.model = ModelDict[model](
-            dataset, pretrained=self.args.pretrained
-        ).to(device)
-        self.optimizer = torch.optim.SGD(
-            self.model.parameters(), 
-            lr=args.lr, 
-            momentum=args.momentum, 
-            weight_decay=args.weight_decay
-        )
         self.criterion = torch.nn.CrossEntropyLoss()
-        self.file_midname = f"{self.id}_{self.model.__class__.__name__}{'_ft_' if self.args.pretrained else '_'}{self.dataset}"
-
-    def load_dataset(self, transform=None):
-        '''
-        default data_path is fixed in datasets, only set partition dir
-        read partition and load train/test dataset
-        wired huh! why not direct pass the datast class, because i want allow client to apply it's own transform, which can't be changed into dataset is created
-        '''
-        dataset = DatasetDict[self.dataset](transform=transform) 
-        with open(os.path.join(par_dict[self.dataset], "partition.pkl"), "rb") as f:
-            partition = pickle.load(f)
-        self.trainset = CustomSubset(dataset, partition[self.id]['train'])
-        self.testset = CustomSubset(dataset, partition[self.id]['test'])
         
-        self.trainloader = torch.utils.data.DataLoader(
-            self.trainset, 
-            batch_size=self.args.batch_size, 
-            shuffle=True, 
-            # num_workers=self.args.num_workers,
-            drop_last=True, # When the current batch size is 1, the batchNorm2d modules in the model would raise error. So the latent size 1 data batches are discarded.
-        )
-        self.testloader = torch.utils.data.DataLoader(
-            self.testset, 
-            batch_size=self.args.batch_size, 
-            shuffle=True, 
-            # num_workers=self.args.num_workers,
-            drop_last=False,
-        )
-        # only in customsubse and in uint8, use [index] to apply transform
-        # print(self.trainset.data.shape, self.trainset.data.dtype)
-        # print(next(iter(self.trainloader))[0].shape, next(iter(self.trainloader))[0].dtype)
-        return self.trainset, self.testset
-
+        # consider all same dataset setting, so only need to init once, consider move to switch if mutli-dataset setting
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.RandomCrop(32, padding=4),
+            transforms.RandomHorizontalFlip(),
+            transforms.Normalize(mean=MEAN[dataset], std=STD[dataset]),
+            # transforms.Resize(224, antialias=True),
+        ])
+        self.dataset = DatasetDict[dataset](transform=transform) 
+        with open(os.path.join(par_dict[dataset], "partition.pkl"), "rb") as f:
+            self.partition = pickle.load(f)
+        
+   
     def train(self, save=True):
         self.model.train()
         train_ls, train_acc = [], []
@@ -84,6 +57,7 @@ class Client(object):
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
+                # self.scheduler.step()
 
                 acc += (torch.argmax(output.detach(), dim=1) == y).sum().item()
                 ls += loss.item() * y.size(0)
@@ -143,3 +117,38 @@ class Client(object):
             client_state_dict[key] = value.clone()
         self.model.load_state_dict(client_state_dict)
         
+    def switch(self, client_id, model, dataset):
+        self.id = client_id
+        self.trainset = CustomSubset(self.dataset, self.partition[self.id]['train'])
+        self.testset = CustomSubset(self.dataset, self.partition[self.id]['test'])
+        
+        self.trainloader = torch.utils.data.DataLoader(
+            self.trainset, 
+            batch_size=self.args.batch_size, 
+            shuffle=True, 
+            # num_workers=self.args.num_workers,
+            drop_last=True, # When the current batch size is 1, the batchNorm2d modules in the model would raise error. So the latent size 1 data batches are discarded.
+        )
+        self.testloader = torch.utils.data.DataLoader(
+            self.testset, 
+            batch_size=self.args.batch_size, 
+            shuffle=True, 
+            # num_workers=self.args.num_workers,
+            drop_last=False,
+        )
+        # only in customsubse and in uint8, use [index] to apply transform
+        # print(self.trainset.data.shape, self.trainset.data.dtype)
+        # print(next(iter(self.trainloader))[0].shape, next(iter(self.trainloader))[0].dtype)
+
+        self.model_name = model
+        self.model = ModelDict[self.model_name](
+            self.dataset_name, pretrained=self.args.pretrained
+        ).to(self.device)
+        self.optimizer = torch.optim.SGD(
+            self.model.parameters(), 
+            lr=self.args.lr, 
+            momentum=self.args.momentum, 
+            weight_decay=self.args.weight_decay
+        )
+        # self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(self.optimizer, T_max=200)
+        self.file_midname = f"{self.id}_{self.model_name}{'_ft_' if self.args.pretrained else '_'}{self.dataset_name}"

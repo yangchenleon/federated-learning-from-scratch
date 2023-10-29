@@ -37,13 +37,13 @@ class Logger:
         self.logger = logging.getLogger('Federated Learning')
         self.logger.setLevel(logging.INFO)
            
-        file_handler = logging.FileHandler(logfile)
-        console_handler = logging.StreamHandler()
+        self.file_handler = logging.FileHandler(logfile)
+        self.console_handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(message)s', '%H:%M:%S')  # %(relativeCreated)d
 
-        file_handler.setFormatter(formatter)
-        console_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
+        self.file_handler.setFormatter(formatter)
+        self.console_handler.setFormatter(formatter)
+        self.logger.addHandler(self.file_handler)
         # self.logger.addHandler(console_handler)
 
     def log(self, message):

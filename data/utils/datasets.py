@@ -82,8 +82,8 @@ class CustomCIFAR10(CustomDataset):
         self.root = root
 
         # first time remember to switch True download
-        trainset = torchvision.datasets.CIFAR10(root, train=True, download=False)
-        testset = torchvision.datasets.CIFAR10(root, train=False, download=False)
+        trainset = torchvision.datasets.CIFAR10(root, train=True, download=True)
+        testset = torchvision.datasets.CIFAR10(root, train=False, download=True)
         
         # here actually trainset.data is already a tensor, no need to torch.tensor()
         train_data = torch.Tensor(trainset.data).permute([0, 1, 2, 3]) # 0 -1 1 2 if dont use ToTensor()

@@ -23,7 +23,7 @@ def partition_data(dataset, args, save=True, draw=False):
     elif args.partition == 'pat':
         idx_sample_client = pathological(dataset, args.num_client, args.num_class_client, args.balance, args.least_samples)
     elif args.partition == 'dir':
-        idx_sample_client = dirichlet(dataset, args.num_client, args.alpha)
+        idx_sample_client = dirichlet(dataset, args.num_client, args.alpha, args.least_samples)
     elif args.partition == 'rad':
         idx_sample_client = randomly_assign_classes(dataset, args.num_client, args.num_class_client)
     elif args.partition == 'srd':
