@@ -294,26 +294,53 @@ b = [3,2,1]
 # ------------------------------------
 import logging
 
-# 创建logger实例
-logger = logging.getLogger('Federated Learning')
-logger.setLevel(logging.INFO)
+# # 创建logger实例
+# logger = logging.getLogger('Federated Learning')
+# logger.setLevel(logging.INFO)
 
-# 创建文件处理器
-file_handler = logging.FileHandler('federated_learning.log')
+# # 创建文件处理器
+# file_handler = logging.FileHandler('federated_learning.log')
 
-# 设置日志格式
-formatter = logging.Formatter('%(relativeCreated)s - %(message)s', '%H:%M:%S')
-file_handler.setFormatter(formatter)
+# # 设置日志格式
+# formatter = logging.Formatter('%(relativeCreated)s - %(message)s', '%H:%M:%S')
+# file_handler.setFormatter(formatter)
 
-# 将文件处理器添加到logger
-logger.addHandler(file_handler)
+# # 将文件处理器添加到logger
+# logger.addHandler(file_handler)
 
-# 在代码中使用logger记录日志
-logger.info('Federated learning process started.')
-logger.debug('Debug information.')
-logger.warning('Warning message.')
-logger.error('Error message.')
+# # 在代码中使用logger记录日志
+# logger.info('Federated learning process started.')
+# logger.debug('Debug information.')
+# logger.warning('Warning message.')
+# logger.error('Error message.')
 
-# 移除处理器和关闭文件处理器
-logger.removeHandler(file_handler)
-file_handler.close()
+# # 移除处理器和关闭文件处理器
+# logger.removeHandler(file_handler)
+# file_handler.close()
+
+# ----------------------------------- 
+from argparse import ArgumentParser
+
+# 创建两个父级解析器，禁用帮助选项
+parent_parser1 = ArgumentParser(add_help=False)
+parent_parser2 = ArgumentParser(add_help=False)
+
+# 向 parent_parser1 添加参数
+parent_parser1.add_argument('--arg1', type=int, help='Argument 1')
+
+# 向 parent_parser2 添加参数
+parent_parser2.add_argument('--arg2', type=str, help='Argument 2')
+
+# 创建子解析器，并指定父级解析器
+child_parser = ArgumentParser(parents=[parent_parser1, parent_parser2])
+
+# 添加子解析器自己的参数
+child_parser.add_argument('--arg3', type=float, help='Argument 3')
+
+# 使用 parse_args() 解析命令行参数
+args = child_parser.parse_args()
+
+# 访问解析结果
+print(args.arg1)
+print(args.arg2)
+print(args.arg3)

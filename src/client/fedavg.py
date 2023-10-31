@@ -9,7 +9,7 @@ from src.models.models import ModelDict
 from src.utils.setting import state_dir
 
 
-class Client(object):
+class FedAvgClient(object):
     '''
     also as FedAvgClient
     '''
@@ -42,6 +42,7 @@ class Client(object):
         self.dataset = DatasetDict[dataset](transform=transform) 
         with open(os.path.join(par_dict[dataset], "partition.pkl"), "rb") as f:
             self.partition = pickle.load(f)
+        self.model = None
         
    
     def train(self, save=True):
@@ -110,7 +111,11 @@ class Client(object):
     def upload(self):
         return self.model, len(self.trainset)
 
-    def receive(self, model):
+    def receive(self, package):
+        model = package
+        if model is None:
+            # global model initializing, same as self.model = self.model
+            return
         model_state_dict = model.state_dict()
         client_state_dict = {}
         for key, value in model_state_dict.items():

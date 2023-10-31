@@ -1,4 +1,4 @@
-import os, logging
+import os, logging, random
 import torch
 import pynvml
 import numpy as np
@@ -32,12 +32,28 @@ def get_best_device(use_cuda: bool) -> torch.device:
     best_gpu_id = np.argmax(gpu_memory)
     return torch.device(f"cuda:{best_gpu_id}")
 
+def fix_random_seed(seed: int) -> None:
+    """Fix the random seed of FL training.
+
+    Args:
+        seed (int): Any number you like as the random seed.
+    """
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.random.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
 class Logger:
     def __init__(self, logfile):
         self.logger = logging.getLogger('Federated Learning')
         self.logger.setLevel(logging.INFO)
            
-        self.file_handler = logging.FileHandler(logfile)
+        self.file_handler = logging.FileHandler(logfile, mode='w')
         self.console_handler = logging.StreamHandler()
         formatter = logging.Formatter('%(asctime)s - %(message)s', '%H:%M:%S')  # %(relativeCreated)d
 
