@@ -17,12 +17,12 @@ class FedMDClient(FedAvgClient):
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.RandomCrop(32, padding=4),
-            transforms.RandomHorizontalFlip(),
+            # transforms.RandomHorizontalFlip(),
             transforms.Normalize(
                 mean=MEAN[self.args.public_dataset], 
                 std=STD[self.args.public_dataset]
             ),
-            # transforms.Resize(224, antialias=True),
+            # transforms.Resize(100, antialias=True),
         ])
         public_dataset = DatasetDict[self.args.public_dataset](transform=transform)
         self.public_dataset = CustomSubset(public_dataset, random.sample(list(range(len(public_dataset))), self.args.public_size))
@@ -40,12 +40,12 @@ class FedMDClient(FedAvgClient):
             for X, _ in self.publicloader:
                 X = X.to(self.device)
                 score.append(self.model(X).detach())
-        return score, (self.model, len(self.trainset))
+        return super().upload(), torch.stack(score)
 
     def receive(self, package):
         model, consensus = package
         if consensus is None:
-            self.consensus = torch.stack(self.upload()[0])
+            self.consensus = self.upload()[1]
         else:
             self.consensus = consensus
         super().receive(model)
@@ -73,3 +73,14 @@ class FedMDClient(FedAvgClient):
         digest_ls = self.digest()
         train_ls, train_acc = super().train(save)
         return digest_ls, train_ls, train_acc
+
+    def pretain(self):
+        self.model.train()
+        for epoch in range(0, self.args.num_pretrain_epoch): # tqdm optional, not recommend
+            for X, y in (self.publicloader): # tqdm optional, not recommend
+                X, y = X.to(self.device), y.to(self.device)
+                output = self.model(X)
+                loss = self.criterion(output, y)
+                self.optimizer.zero_grad()
+                loss.backward()
+                self.optimizer.step()

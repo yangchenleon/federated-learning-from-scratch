@@ -28,10 +28,9 @@ class FedAvgServer(object):
         self.datasets = random.choices(datasets, k=self.num_client) # ['minst', 'cifar10', ...]
         self.models = random.choices(models, k=self.num_client)  # ['lenet', 'vgg', ...]
         self.selected_clients = [] # dynmic at round i
-        self.client_model = []
-        self.client_weight = []
         self.client_loss = [] # track it mean always create many clients, quite expensive 
         self.client_acc = []
+        self.all_client_weight = [None for _ in range(self.num_client)]
         self.all_client_model = [None for _ in range(self.num_client)]
 
         # server setting: set [0] as default global model/dataset
@@ -74,9 +73,7 @@ class FedAvgServer(object):
         self.client = FedAvgClient(0, self.data_name, self.model_name, self.args, self.logger, self.device)
         self.criterion = torch.nn.CrossEntropyLoss()
 
-    def round_train(self, round):
-        self.selected_clients = self.client_sample_stream[round]
-        self.client_model, self.client_weight = [], [] # cache clean
+    def round_train(self):
         for client_id in self.selected_clients: # real-world parallel, program-level sequential
             dataset, model = self.datasets[client_id], self.models[client_id]
             # 每一次训练都会生成一个client，大佬的做法是同一个client对象，但是数据集还是统一，训练输入给client编号，根据编号重新设置训练和测试子集、dataloader。多了创建对象、重新读取dataset、partition的步骤，考虑到暂时可优化反复读数据集的情况，可修改，改了后仍可拓展为多dataset的情况。
@@ -87,14 +84,15 @@ class FedAvgServer(object):
             old_ls, old_acc = self.client.eval()
             train_ls, train_acc = self.client.train(save=False)
             new_ls, new_acc = self.client.eval()
-            self.recive(client_id, self.client.upload())
+            self.recive(self.client.upload())
             
             self.logger.log(f"client {client_id:02d}, (train) loss:{train_ls[-1]:.2f}|acc:{train_acc[-1]:.2f} (test) loss:{old_ls:.2f}->{new_ls:.2f}|acc:{old_acc:.2f}%->{new_acc:.2f}%")
     
     def train(self, save=True):
         for round in tqdm(range(self.args.global_round)):
             self.logger.log("-" * 32 + f"TRAINING EPOCH: {round + 1:02d}" + "-" * 32)
-            self.round_train(round)
+            self.selected_clients = self.client_sample_stream[round]
+            self.round_train()
             self.aggregate()
             self.evaluate()
         self.logger.log("-" * 35 + f"FINAL RESULT" + "-" * 35)
@@ -104,11 +102,10 @@ class FedAvgServer(object):
         if save:
             self.save_state()
 
-    def recive(self, client_id, upload):
-        model, num_sample = upload
-        self.client_model.append(model)
-        self.client_weight.append(num_sample)
-        self.all_client_model[client_id] = model
+    def recive(self, upload):
+        id, model, num_sample = upload
+        self.all_client_weight[id] = num_sample
+        self.all_client_model[id] = model
     
     def distribute(self, client_id):
         package = self.all_client_model[client_id]
@@ -116,9 +113,11 @@ class FedAvgServer(object):
     
     def aggregate(self):
         averaged_state_dict = {}
-        weights = torch.tensor(self.client_weight) / sum(self.client_weight)
+        weights = [self.all_client_weight[i] for i in self.selected_clients]
+        weights = torch.tensor(weights) / sum(weights)
+        models = [self.all_client_model[i] for i in self.selected_clients]
 
-        for w, model in zip(weights, self.client_model):
+        for w, model in zip(weights, models):
             for name, param in model.state_dict().items():
                 if name not in averaged_state_dict:
                     averaged_state_dict[name] = param.clone() * w

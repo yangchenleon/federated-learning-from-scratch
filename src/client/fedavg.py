@@ -35,22 +35,20 @@ class FedAvgClient(object):
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.RandomCrop(32, padding=4),
-            transforms.RandomHorizontalFlip(),
+            # transforms.RandomHorizontalFlip(),
             transforms.Normalize(mean=MEAN[dataset], std=STD[dataset]),
-            # transforms.Resize(224, antialias=True),
+            # transforms.Resize(100, antialias=True),
         ])
         self.dataset = DatasetDict[dataset](transform=transform) 
         with open(os.path.join(par_dict[dataset], "partition.pkl"), "rb") as f:
             self.partition = pickle.load(f)
         self.model = None
         
-   
     def train(self, save=True):
         self.model.train()
         train_ls, train_acc = [], []
         for epoch in range(0, self.args.num_epochs): # tqdm optional, not recommend
             num_sample, ls, acc = 0, 0, 0
-            # self.logger.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
             for X, y in (self.trainloader): # tqdm optional, not recommend
                 X, y = X.to(self.device), y.to(self.device)
                 output = self.model(X)
@@ -109,7 +107,7 @@ class FedAvgClient(object):
         self.model.eval()
     
     def upload(self):
-        return self.model, len(self.trainset)
+        return self.id, self.model, len(self.trainset)
 
     def receive(self, package):
         model = package

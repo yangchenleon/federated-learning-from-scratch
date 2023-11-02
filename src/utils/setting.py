@@ -43,9 +43,22 @@ def fedavg_argpaser():
 
 def fedmd_argpaser():
     parser = get_argpaser()
-    parser.set_defaults(join_ratio=1.0)
-    parser.add_argument('-pd', '--public_dataset', type=str, default='fashion')
-    parser.add_argument('-ps', '--public_size', type=int, default=500)
-    parser.add_argument('-ndp', '--num_digest_epoch', type=int, default=2)
+    # parser.set_defaults(join_ratio=1.0)
+    parser.add_argument('-pd', '--public_dataset', type=str, default='mnist')
+    parser.add_argument('-ps', '--public_size', type=int, default=5000)
+    parser.add_argument('-bpe', '--num_pretrain_epoch', type=int, default=5)
+    parser.add_argument('--num_digest_epoch', type=int, default=2)
     parser.add_argument('-pbs', '--public_batch_size', type=int, default=32)
+    return parser
+
+def fedpkl_argparser():
+    parser = fedmd_argpaser()
+    # parser.set_defaults(join_ratio=1.0)
+    parser.add_argument('--num_distil_epoch', type=int, default=2)
+    parser.add_argument('-lt', '--local_temper', type=int, default=10)
+    parser.add_argument('-gt', '--global_temper', type=int, default=10)
+    parser.add_argument('-glr', '--global_lr', type=float, default=0.01)
+    parser.add_argument('-nlme', '--num_learn_matrix_epoch', type=int, default=1)
+    parser.add_argument('--rho', type=float, default=0.7)
+    
     return parser

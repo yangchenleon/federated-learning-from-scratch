@@ -5,9 +5,9 @@ from src.utils.algorithm import ARG_DICT, ALGO_DICT
 if __name__ == "__main__":
     fix_random_seed(42)
 
-    algorithm = 'fedmd'
-    datasets = ['fashion']
-    models = ['theres18', 'resnet18']
+    algorithm = 'fedpkl'
+    datasets = ['mnist']
+    models = ['cnn']
     args = ARG_DICT[algorithm].parse_args()
     for dataset in datasets:
         partition_data(dataset, args, draw=True)

@@ -95,10 +95,35 @@ class CustomCIFAR10(CustomDataset):
         self.targets = torch.cat([train_targets, test_targets], dim=0)
         self.classes = trainset.classes
 
+class CustomEMNIST(CustomDataset):
+    def __init__(self, root=data_dict['emnist'], transform=None, target_transform=None):
+        super().__init__(transform, target_transform)
+        self.root = root
+
+        # EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
+        # EMNIST ByMerge: 814,255 characters. 47 unbalanced classes.
+        # EMNIST Balanced: 131,600 characters. 47 balanced classes.
+        # EMNIST Letters: 145,600 characters. 26 balanced classes.
+        # EMNIST Digits: 280,000 characters. 10 balanced classes.
+        # EMNIST MNIST: 70,000 characters. 10 balanced classes.
+        # default balanced: low data volumn but inlcude include all classes
+        trainset = torchvision.datasets.EMNIST(root, train=True, download=True, split='balanced')
+        testset = torchvision.datasets.EMNIST(root, train=False, download=True, split='balanced')
+        
+        # here actually trainset.data is already a tensor, no need to torch.tensor()
+        train_data = torch.Tensor(trainset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3]) # add channel dim
+        test_data = torch.Tensor(testset.data).unsqueeze(dim=3).repeat([1, 1, 1, 3])
+        train_targets = torch.Tensor(trainset.targets).long().squeeze()
+        test_targets = torch.Tensor(testset.targets).long().squeeze()
+
+        self.data = torch.cat([train_data, test_data], dim=0)
+        self.targets = torch.cat([train_targets, test_targets], dim=0)
+        self.classes = trainset.classes
 
 DatasetDict = {
     'mnist': CustomMNIST, 
     'fashion': CustomFashionMNIST,
     'cifar10': CustomCIFAR10, 
     'cifar100': torchvision.datasets.CIFAR100, 
+    'emnist': CustomEMNIST,
 }

@@ -319,28 +319,51 @@ import logging
 # file_handler.close()
 
 # ----------------------------------- 
-from argparse import ArgumentParser
+# from argparse import ArgumentParser
 
-# 创建两个父级解析器，禁用帮助选项
-parent_parser1 = ArgumentParser(add_help=False)
-parent_parser2 = ArgumentParser(add_help=False)
+# # 创建两个父级解析器，禁用帮助选项
+# parent_parser1 = ArgumentParser(add_help=False)
+# parent_parser2 = ArgumentParser(add_help=False)
 
-# 向 parent_parser1 添加参数
-parent_parser1.add_argument('--arg1', type=int, help='Argument 1')
+# # 向 parent_parser1 添加参数
+# parent_parser1.add_argument('--arg1', type=int, help='Argument 1')
 
-# 向 parent_parser2 添加参数
-parent_parser2.add_argument('--arg2', type=str, help='Argument 2')
+# # 向 parent_parser2 添加参数
+# parent_parser2.add_argument('--arg2', type=str, help='Argument 2')
 
-# 创建子解析器，并指定父级解析器
-child_parser = ArgumentParser(parents=[parent_parser1, parent_parser2])
+# # 创建子解析器，并指定父级解析器
+# child_parser = ArgumentParser(parents=[parent_parser1, parent_parser2])
 
-# 添加子解析器自己的参数
-child_parser.add_argument('--arg3', type=float, help='Argument 3')
+# # 添加子解析器自己的参数
+# child_parser.add_argument('--arg3', type=float, help='Argument 3')
 
-# 使用 parse_args() 解析命令行参数
-args = child_parser.parse_args()
+# # 使用 parse_args() 解析命令行参数
+# args = child_parser.parse_args()
 
-# 访问解析结果
-print(args.arg1)
-print(args.arg2)
-print(args.arg3)
+# # 访问解析结果
+# print(args.arg1)
+# print(args.arg2)
+# print(args.arg3)
+
+# ----------------------------------------
+import torch
+import torch.optim as optim
+
+# 初始化权重和模型
+modela = torch.tensor([1.0, 2.0, 3.0])
+w = torch.tensor([0.5, 0.5, 0.5], requires_grad=True)
+modelb = torch.tensor([1.0, 2.0, 3.0])
+
+learning_rate = 0.01
+optimizer = optim.SGD([w], lr=learning_rate)
+
+for i in range(100):
+    model_output = modela +  w * modelb
+    loss = torch.abs(torch.sum(model_output))
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    print(model_output)
+with torch.no_grad():
+    print(w.detach().tolist())
