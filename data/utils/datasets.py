@@ -1,6 +1,10 @@
+import os
+import pandas as pd
 import numpy as np
+from PIL import Image
 import torch, torchvision
 from torch.utils.data.dataset import Dataset, Subset
+from torchvision.transforms.functional import pil_to_tensor
 
 from data.utils.setting import data_dict
 
@@ -120,10 +124,56 @@ class CustomEMNIST(CustomDataset):
         self.targets = torch.cat([train_targets, test_targets], dim=0)
         self.classes = trainset.classes
 
+class CustomTinyImageNet(CustomDataset):
+    def __init__(self, root=data_dict['tinyimage'], transform=None, target_transform=None):
+        super().__init__(transform, target_transform)
+
+        self.classes = pd.read_table(
+            root + "tiny-imagenet-200/wnids.txt", sep="\t", engine="python", header=None
+        )[0].tolist()
+        
+        if not os.path.isfile(root + "data.pt") or not os.path.isfile(root + "targets.pt"):
+            mapping = dict(zip(self.classes, list(range(len(self.classes)))))
+            data = []
+            targets = []
+            train_dir  = f"{root}/tiny-imagenet-200/train/"
+            for cls in os.listdir(train_dir):
+                for img_name in os.listdir(f"{train_dir}/{cls}/images/"):
+                    img = pil_to_tensor(
+                        Image.open(f"{train_dir}/{cls}/images/{img_name}")
+                    ).float() # permute back to align with other dataset
+                    if img.shape[0] == 1:
+                        img = torch.expand_copy(img, [3, 64, 64])
+                    data.append(img.permute([1, 2, 0]))
+                    targets.append(mapping[cls])
+
+            # table = pd.read_table(
+            #     root + "/raw/val/val_annotations.txt",
+            #     sep="\t",
+            #     engine="python",
+            #     header=None,
+            # )
+            # test_classes = dict(zip(table[0].tolist(), table[1].tolist()))
+            # for img_name in os.listdir(root / "raw" / "val" / "images"):
+            #     img = pil_to_tensor(
+            #         Image.open(root / "raw" / "val" / "images" / img_name)
+            #     ).float()
+            #     if img.shape[0] == 1:
+            #         img = torch.expand_copy(img, [3, 64, 64])
+            #     data.append(img)
+            #     targets.append(mapping[test_classes[img_name]])
+            torch.save(torch.stack(data), root + "data.pt")
+            torch.save(torch.tensor(targets, dtype=torch.long), root + "targets.pt")
+
+        self.data = torch.load(root + "data.pt")
+        self.targets = torch.load(root + "targets.pt")
+        
+
 DatasetDict = {
     'mnist': CustomMNIST, 
     'fashion': CustomFashionMNIST,
     'cifar10': CustomCIFAR10, 
     'cifar100': torchvision.datasets.CIFAR100, 
     'emnist': CustomEMNIST,
+    'tinyimage': CustomTinyImageNet,
 }

@@ -16,6 +16,8 @@ def partition_data(dataset, args, save=True, draw=False):
     1. if niid, partion is useless. 2. if partition is dir, balance is useless.
     '''
     path = par_dict[dataset]
+    dataset = DatasetDict[dataset](transform=None)
+    show_image(dataset)
     if check(args, path):
         with open(os.path.join(path, "partition.pkl"), "rb") as f:
             split_partition =  pickle.load(f)
@@ -23,7 +25,7 @@ def partition_data(dataset, args, save=True, draw=False):
             statistic_client = json.load(f)
         return split_partition, statistic_client
     
-    dataset = DatasetDict[dataset](transform=None)
+    # dataset = DatasetDict[dataset](transform=None)
     if args.partition == 'iid':
         idx_sample_client = iid_partition(dataset, args.num_client)
     elif args.partition == 'pat':
@@ -134,7 +136,7 @@ def show_image(dataset):
         plt.xticks([])
         plt.yticks([])
         plt.grid(False)
-        plt.imshow(dataset.data[i], cmap=plt.cm.binary)
+        plt.imshow(dataset.data[i] / 255, cmap=plt.cm.binary)
         #plt.imshow(train_images[i].squeeze(), cmap=plt.cm.binary)
         plt.xlabel(dataset.classes[dataset.targets[i]])
-    plt.savefig('results/figures/show.png')
+    plt.savefig(f'results/figures/{type(dataset).__name__[6:]}.png')
