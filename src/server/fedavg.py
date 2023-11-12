@@ -36,15 +36,16 @@ class FedAvgServer(object):
         # server setting: set [0] as default global model/dataset
         self.data_name = datasets[0]
         self.model_name = models[0]
-        self.global_model = ModelDict[self.model_name](
-            self.data_name, pretrained=self.args.pretrained
-        ).to(self.device)
+        
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean=MEAN[self.data_name], std=STD[self.data_name]),
             # transforms.Resize(224, antialias=True),
         ])
         self.global_dataset = DatasetDict[self.data_name](transform=transform)
+        self.global_model = ModelDict[self.model_name](
+            num_classes=len(self.global_dataset.classes)
+        ).to(self.device)
         with open(os.path.join(par_dict[self.data_name], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
         test_indices = np.concatenate([client['test'] for client in partition])

@@ -13,7 +13,7 @@ log_dir = save_base + 'logs/'
 
 def get_argpaser():
     parser = ArgumentParser()
-    parser.add_argument('-n', '--num_client', type=int, default=10)
+    parser.add_argument('-n', '--num_client', type=int, default=1)
     parser.add_argument('--balance', type=int, default=1) # actually only impl pat imbalance
     parser.add_argument('--partition', type=str, choices=['iid', 'pat', 'dir', 'mix', 'rad', 'srd'], default='iid')
     parser.add_argument('-a', '--alpha', type=float, default=0.1)
@@ -29,11 +29,11 @@ def get_argpaser():
     parser.add_argument('-mom', '--momentum', type=float, default=0.9)
     parser.add_argument('-ne', '--num_epochs', type=int, default=5)
 
-    parser.add_argument('-jt', '--join_ratio', type=float, default=0.2)
-    parser.add_argument('-gr', '--global_round', type=int, default=10)
+    parser.add_argument('-jt', '--join_ratio', type=float, default=0.6) # jt * ne is the number of epoch in one-client setting
+    parser.add_argument('-gr', '--global_round', type=int, default=50)
 
-    parser.add_argument('-ge', '--global_eval', type=int, default=0)
-    parser.add_argument('-ce', '--client_eval', type=int, default=1)
+    parser.add_argument('-ge', '--global_eval', type=int, default=1)
+    parser.add_argument('-ce', '--client_eval', type=int, default=0)
 
     return parser
 
@@ -61,4 +61,10 @@ def fedpkl_argparser():
     parser.add_argument('-nlme', '--num_learn_matrix_epoch', type=int, default=1)
     parser.add_argument('--rho', type=float, default=0.7)
     
+    return parser
+
+def fedproto_argpaser():
+    parser = get_argpaser()
+    parser.add_argument('--lamda', type=float, default=1.0)
+
     return parser

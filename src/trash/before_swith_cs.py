@@ -33,7 +33,7 @@ class Client(object):
         
         self.trained_epoch = 0 # maintain at server
         self.model = ModelDict[model](
-            dataset, pretrained=self.args.pretrained
+            num_classes=len(self.dataset.num_classes)
         ).to(device)
         self.optimizer = torch.optim.SGD(
             self.model.parameters(), 

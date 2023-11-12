@@ -5,9 +5,9 @@ from src.utils.algorithm import ARG_DICT, ALGO_DICT
 if __name__ == "__main__":
     fix_random_seed(42)
 
-    algorithm = 'fedpkl'
-    datasets = ['mnist']
-    models = ['cnn']
+    algorithm = 'fedavg'
+    datasets = ['tinyimage']
+    models = ['resnet18']
     args = ARG_DICT[algorithm].parse_args()
     for dataset in datasets:
         partition_data(dataset, args, draw=True)
@@ -15,3 +15,4 @@ if __name__ == "__main__":
   
     server = ALGO_DICT[algorithm](datasets, models, args)
     server.train()
+    # server.test()

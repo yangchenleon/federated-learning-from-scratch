@@ -62,9 +62,9 @@ class FedAvgClient(object):
                 ls += loss.item() * y.size(0)
                 num_sample += len(y) # same as y.size(0), y.shape[0]
             
-            train_ls.append(ls/num_sample)
-            train_acc.append(acc/num_sample*100)
-            # self.logger.log(f'{self.id}_epoch:{epoch+1}  train loss:{ls/num_sample:.3f}, train accuracy:{acc/num_sample*100:.2f}%')
+            train_ls.append(ls / num_sample)
+            train_acc.append(acc / num_sample * 100)
+            self.logger.log(f'{self.id}_epoch:{epoch+1}  (train) loss:{ls/num_sample:.3f} | acc:{acc/num_sample*100:.2f}%') # in case the training is slow / data per client is large
         
         if save:
             self.save_state()
@@ -130,7 +130,7 @@ class FedAvgClient(object):
             batch_size=self.args.batch_size, 
             shuffle=True, 
             # num_workers=self.args.num_workers,
-            drop_last=True, # When the current batch size is 1, the batchNorm2d modules in the model would raise error. So the latent size 1 data batches are discarded.
+            drop_last=False, # When the current batch size is 1, the batchNorm2d modules in the model would raise error. So the latent size 1 data batches are discarded.
         )
         self.testloader = torch.utils.data.DataLoader(
             self.testset, 
@@ -145,7 +145,7 @@ class FedAvgClient(object):
 
         self.model_name = model
         self.model = ModelDict[self.model_name](
-            self.dataset_name, pretrained=self.args.pretrained
+            num_classes=len(self.dataset.classes)
         ).to(self.device)
         self.optimizer = torch.optim.SGD(
             self.model.parameters(), 

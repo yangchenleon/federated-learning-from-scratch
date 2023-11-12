@@ -349,21 +349,100 @@ import logging
 import torch
 import torch.optim as optim
 
-# 初始化权重和模型
-modela = torch.tensor([1.0, 2.0, 3.0])
-w = torch.tensor([0.5, 0.5, 0.5], requires_grad=True)
-modelb = torch.tensor([1.0, 2.0, 3.0])
+# # 初始化权重和模型
+# modela = torch.tensor([1.0, 2.0, 3.0])
+# w = torch.tensor([0.5, 0.5, 0.5], requires_grad=True)
+# modelb = torch.tensor([1.0, 2.0, 3.0])
 
-learning_rate = 0.01
-optimizer = optim.SGD([w], lr=learning_rate)
+# learning_rate = 0.01
+# optimizer = optim.SGD([w], lr=learning_rate)
 
-for i in range(100):
-    model_output = modela +  w * modelb
-    loss = torch.abs(torch.sum(model_output))
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+# for i in range(100):
+#     model_output = modela +  w * modelb
+#     loss = torch.abs(torch.sum(model_output))
+#     optimizer.zero_grad()
+#     loss.backward()
+#     optimizer.step()
 
-    print(model_output)
-with torch.no_grad():
-    print(w.detach().tolist())
+#     print(model_output)
+# with torch.no_grad():
+#     print(w.detach().tolist())
+
+# --------------------------------------
+import numpy as np
+import matplotlib.pyplot as plt
+
+# # 生成两个随机变量的数据
+# x = np.random.randn(1000)
+# y = np.random.randn(1000)
+
+# # 绘制二元直方图
+# plt.hist2d(x, y, bins=20, cmap='Blues')
+
+# # 添加颜色条
+# plt.colorbar()
+
+# # 设置坐标轴标签和标题
+# plt.xlabel('X')
+# plt.ylabel('Y')
+# plt.title('2D Histogram')
+
+# # 显示图像
+# plt.savefig(f'results/figures/test.png')
+
+import seaborn as sns
+import pandas as pd
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 假设有n个人
+n = 10
+
+# 假设进行100次筛子
+num_trials = 100
+
+# 生成筛子结果数据
+dice_results = np.random.randint(1, 7, size=(num_trials, n))
+
+# 统计每个点数的次数
+counts = np.zeros((6, n))
+for i in range(6):
+    for j in range(n):
+        counts[i, j] = np.sum(dice_results[:, j] == (i + 1))
+
+# 创建画布和轴
+fig, ax = plt.subplots()
+
+# 调整数据形状以匹配散点图要求
+x = np.repeat(np.arange(n), 6)
+y = np.tile(np.arange(1, 7), n)
+sizes = counts.flatten() * 10
+colors = counts.flatten() / np.max(counts)
+
+# 绘制散点图
+ax.scatter(x, y, c=colors, s=sizes, cmap='Blues')
+
+# 添加网格
+ax.grid(True, linestyle='--', linewidth=0.5)
+
+# 设置图表标题和轴标签
+ax.set_title('Distributed Dot Plot - Dice Results')
+ax.set_xlabel('Person')
+ax.set_ylabel('Point')
+
+# 设置横轴刻度范围和标签
+ax.set_xlim(-1, n)
+ax.set_xticks(np.arange(n))
+ax.set_xticklabels(np.arange(1, n+1))
+
+# 设置纵轴刻度范围和标签
+ax.set_ylim(0, 7)
+ax.set_yticks(np.arange(1, 7))
+ax.set_yticklabels(np.arange(1, 7))
+
+# 显示图表
+plt.show()
+
+# 显示图像
+plt.savefig(f'results/figures/test.png')

@@ -31,7 +31,7 @@ class FedMDServer(FedAvgServer):
             new_ls, new_acc = self.client.eval()
             self.recive(self.client.upload())
             
-            self.logger.log(f"client {client_id:02d}, (train) dg:{digest_ls[-1]:.2f}|loss:{train_ls[-1]:.2f}|acc:{train_acc[-1]:.2f} (test) loss:{old_ls:.2f}->{new_ls:.2f}|acc:{old_acc:.2f}%->{new_acc:.2f}%")
+            self.logger.log(f"client {client_id:02d}, (train) dgs:{digest_ls[-1]:.2f}|loss:{train_ls[-1]:.2f}|acc:{train_acc[-1]:.2f} (test) loss:{old_ls:.2f}->{new_ls:.2f}|acc:{old_acc:.2f}%->{new_acc:.2f}%")
     
     def recive(self, upload):
         upload, client_score = upload
@@ -52,9 +52,9 @@ class FedMDServer(FedAvgServer):
     
     def train(self, save=True):
         self.logger.log("pretraining")
-        # for client_id in range(self.num_client):
-        #     dataset, model = self.datasets[client_id], self.models[client_id]
-        #     self.client.switch(client_id, model, dataset)
-        #     self.client.pretain()
-        #     self.recive(self.client.upload())
+        for client_id in range(self.num_client):
+            dataset, model = self.datasets[client_id], self.models[client_id]
+            self.client.switch(client_id, model, dataset)
+            self.client.pretain()
+            self.recive(self.client.upload())
         return super().train(save)

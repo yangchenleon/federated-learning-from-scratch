@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from data.utils.setting import data_info
-
 
 class AlexNet(nn.Module):
     def __init__(self, num_classes=10):
@@ -42,7 +40,5 @@ class AlexNet(nn.Module):
         x = self.fc(x)
         return x
 
-def TheAlexNet(dataset, pretrained=False):
-    input_dim = data_info[dataset][0]
-    output_dim = data_info[dataset][2]
-    return AlexNet()
+def TheAlexNet(num_class=10):
+    return AlexNet(num_class)
