@@ -64,7 +64,7 @@ class FedAvgClient(object):
             
             train_ls.append(ls / num_sample)
             train_acc.append(acc / num_sample * 100)
-            self.logger.log(f'{self.id}_epoch:{epoch+1}  (train) loss:{ls/num_sample:.3f} | acc:{acc/num_sample*100:.2f}%') # in case the training is slow / data per client is large
+            # self.logger.log(f'{self.id}_epoch:{epoch+1}  (train) loss:{ls/num_sample:.3f} | acc:{acc/num_sample*100:.2f}%') # in case the training is slow / data per client is large
         
         if save:
             self.save_state()
@@ -123,7 +123,11 @@ class FedAvgClient(object):
     def switch(self, client_id, model, dataset):
         self.id = client_id
         self.trainset = CustomSubset(self.dataset, self.partition[self.id]['train'])
-        self.testset = CustomSubset(self.dataset, self.partition[self.id]['test'])
+        self.testset = CustomSubset(self.dataset, self.partition[self.id]['test'], 
+        transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize(mean=MEAN[self.dataset_name], std=STD[self.dataset_name]),
+        ]))
         
         self.trainloader = torch.utils.data.DataLoader(
             self.trainset, 

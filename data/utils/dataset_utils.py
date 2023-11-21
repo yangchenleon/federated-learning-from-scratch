@@ -16,8 +16,6 @@ def partition_data(dataset, args, save=True, draw=False):
     1. if niid, partion is useless. 2. if partition is dir, balance is useless.
     '''
     path = par_dict[dataset]
-    dataset = DatasetDict[dataset](transform=None)
-    show_image(dataset)
     if check(args, path):
         with open(os.path.join(path, "partition.pkl"), "rb") as f:
             split_partition =  pickle.load(f)
@@ -25,7 +23,7 @@ def partition_data(dataset, args, save=True, draw=False):
             statistic_client = json.load(f)
         return split_partition, statistic_client
     
-    # dataset = DatasetDict[dataset](transform=None)
+    dataset = DatasetDict[dataset](transform=None)
     if args.partition == 'iid':
         idx_sample_client = iid_partition(dataset, args.num_client)
     elif args.partition == 'pat':
@@ -45,8 +43,6 @@ def partition_data(dataset, args, save=True, draw=False):
         
     if save:
         save_partition(split_partition, statistic_client, args, path)
-    if draw:
-        draw_distribution(dataset, partition, args, path)
     
     return split_partition, statistic_client
 
@@ -88,32 +84,6 @@ def save_partition(partition, stats, args, path):
 
     with open(os.path.join(path, "args.json"), "w") as f:
         json.dump(vars(args), f)
-    
-def draw_distribution(dataset, partition, args, path):
-    labels = dataset.targets
-    name_class = dataset.classes
-    num_client = len(partition)
-    num_class = len(name_class)
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    plt.figure(figsize=(12, 8))
-    label_distribution = [[] for _ in range(num_class)]
-    for client, idx_sample in enumerate(partition):
-        for idx in idx_sample:
-            label_distribution[labels[idx]].append(client)
-
-    plt.hist(label_distribution, stacked=True,
-             bins=np.arange(-0.5, num_client + 1.5, 1),
-             label=name_class, rwidth=0.5)
-    plt.xticks(np.arange(num_client), ["Client %d" % c_id for c_id in range(num_client)])
-    plt.xlabel("Client ID")
-    plt.ylabel("Number of samples")
-    plt.legend(loc="upper right")
-    plt.title("Display Label Distribution on Different Clients")
-    plt.savefig(os.path.join(path, f'{type(dataset).__name__[6:]}_{args.num_client}_{args.partition}.png'))
-    plt.show()
 
 def check(args, path):
     # false mean not exist
@@ -128,15 +98,3 @@ def check(args, path):
             if data[key] != getattr(args, key):
                 return  False
     return True
-
-def show_image(dataset):
-    plt.figure(figsize=(20, 10))
-    for i in range(20):
-        plt.subplot(4, 5, i + 1)
-        plt.xticks([])
-        plt.yticks([])
-        plt.grid(False)
-        plt.imshow(dataset.data[i] / 255, cmap=plt.cm.binary)
-        #plt.imshow(train_images[i].squeeze(), cmap=plt.cm.binary)
-        plt.xlabel(dataset.classes[dataset.targets[i]])
-    plt.savefig(f'results/figures/{type(dataset).__name__[6:]}.png')

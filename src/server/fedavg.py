@@ -87,7 +87,7 @@ class FedAvgServer(object):
             new_ls, new_acc = self.client.eval()
             self.recive(self.client.upload())
             
-            self.logger.log(f"client {client_id:02d}, (train) loss:{train_ls[-1]:.2f}|acc:{train_acc[-1]:.2f} (test) loss:{old_ls:.2f}->{new_ls:.2f}|acc:{old_acc:.2f}%->{new_acc:.2f}%")
+            self.logger.log(f"client {client_id:02d}, (train) loss:{train_ls[-1]:.2f}|acc:{train_acc[-1]:.2f}% (test) loss:{old_ls:.2f}->{new_ls:.2f}|acc:{old_acc:.2f}%->{new_acc:.2f}%")
     
     def train(self, save=True):
         for round in tqdm(range(self.args.global_round)):

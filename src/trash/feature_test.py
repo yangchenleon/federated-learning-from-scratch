@@ -390,6 +390,7 @@ import matplotlib.pyplot as plt
 # # 显示图像
 # plt.savefig(f'results/figures/test.png')
 
+# -------------------------------------------
 import seaborn as sns
 import pandas as pd
 
@@ -417,8 +418,8 @@ fig, ax = plt.subplots()
 # 调整数据形状以匹配散点图要求
 x = np.repeat(np.arange(n), 6)
 y = np.tile(np.arange(1, 7), n)
-sizes = counts.flatten() * 10
-colors = counts.flatten() / np.max(counts)
+sizes = counts.flatten()
+colors = counts.flatten()
 
 # 绘制散点图
 ax.scatter(x, y, c=colors, s=sizes, cmap='Blues')
@@ -446,3 +447,58 @@ plt.show()
 
 # 显示图像
 plt.savefig(f'results/figures/test.png')
+
+# --------------------------------
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# # 模拟投掷骰子的结果
+# def simulate_dice_rolls(num_users, num_rolls):
+#     rolls = np.random.randint(1, 7, size=(num_users, num_rolls))
+#     return rolls
+
+# # 统计每个用户每个点数的次数
+# def count_dice_rolls(rolls):
+#     counts = np.zeros((rolls.shape[0], 6), dtype=int)
+#     for i in range(6):
+#         counts[:, i] = np.sum(rolls == (i+1), axis=1)
+#     return counts
+
+# # 生成分布直方图
+# def plot_histogram(counts):
+#     num_users = counts.shape[0]
+#     x = np.arange(num_users)
+    
+#     fig, ax = plt.subplots()
+#     bar_width = 0.5
+
+#     colors = ['r', 'g', 'b', 'c', 'm', 'y']
+#     labels = ['1', '2', '3', '4', '5', '6']
+    
+#     for i in range(6):
+#         ax.bar(x, counts[:, i], bar_width, label=labels[i], color=colors[i], bottom=np.sum(counts[:, :i], axis=1))
+
+#     ax.set_xlabel('User')
+#     ax.set_ylabel('Count')
+#     ax.set_title('Dice Roll Distribution')
+#     ax.set_xticks(x)
+#     ax.set_xticklabels([str(i+1) for i in range(num_users)])
+#     ax.legend()
+
+#     plt.tight_layout()
+#     plt.show()
+
+# # 主函数
+# def main():
+#     num_users = 10
+#     num_rolls = 100
+
+#     rolls = simulate_dice_rolls(num_users, num_rolls)
+#     counts = count_dice_rolls(rolls)
+#     plot_histogram(counts)
+
+# if __name__ == '__main__':
+#     main()
+
+# plt.savefig(f'results/figures/Distribution of Dice Rolls11.png')
