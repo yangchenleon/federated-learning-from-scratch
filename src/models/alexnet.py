@@ -1,3 +1,7 @@
+'''
+not very usefull, the input in the origin paper requrire 224
+if input size is 32 (cifar), the conv layer not enough to resize
+'''
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from data.utils.datasets import DatasetDict, CustomSubset
 from data.utils.setting import par_dict, MEAN, STD
-from src.models.models import ModelDict
+from src.models.models import getmodel
 from src.utils.setting import state_dir
 
 
@@ -148,8 +148,8 @@ class FedAvgClient(object):
         # print(next(iter(self.trainloader))[0].shape, next(iter(self.trainloader))[0].dtype)
 
         self.model_name = model
-        self.model = ModelDict[self.model_name](
-            num_classes=len(self.dataset.classes)
+        self.model = getmodel(self.model_name,
+                              num_classes=len(self.dataset.classes)
         ).to(self.device)
         self.optimizer = torch.optim.SGD(
             self.model.parameters(), 

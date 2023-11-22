@@ -12,10 +12,11 @@ if __name__ == "__main__":
     args = ARG_DICT[algorithm].parse_args()
     for dataset in datasets:
         partition_data(dataset, args, draw=True)
-        draw_distribution(dataset, 'dot')
+        draw_data_sample(dataset)
+        draw_distribution(dataset, 'heat')
   
-    # server = ALGO_DICT[algorithm](datasets, models, args)
-    # server.train()
+    server = ALGO_DICT[algorithm](datasets, models, args)
+    server.train()
     # server.test()
     
     

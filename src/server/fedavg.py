@@ -8,7 +8,7 @@ from data.utils.setting import par_dict, MEAN, STD
 from data.utils.datasets import DatasetDict, CustomSubset
 from src.utils.setting import *
 from src.utils.train_utils import get_best_device, Logger
-from src.models.models import ModelDict
+from src.models.models import getmodel
 from src.client.fedavg import FedAvgClient
 
 
@@ -43,8 +43,8 @@ class FedAvgServer(object):
             # transforms.Resize(224, antialias=True),
         ])
         self.global_dataset = DatasetDict[self.data_name](transform=transform)
-        self.global_model = ModelDict[self.model_name](
-            num_classes=len(self.global_dataset.classes)
+        self.global_model = getmodel(
+            self.model_name, num_classes=len(self.global_dataset.classes)
         ).to(self.device)
         with open(os.path.join(par_dict[self.data_name], "partition.pkl"), "rb") as f:
             partition = pickle.load(f)
