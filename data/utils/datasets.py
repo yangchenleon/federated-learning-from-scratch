@@ -171,7 +171,8 @@ class CustomMNISTM(CustomDataset):
     def __init__(self, root=data_dict['mnistm'], transform=None):
         super().__init__(transform)
         self.root = root
-
+        
+        # download it first https://github.com/liyxi/mnist-m/releases/tag/data 
         trainset = torch.load(os.path.join(self.root, 'mnist_m_train.pt'))
         testset = torch.load(os.path.join(self.root, 'mnist_m_test.pt'))
         
@@ -189,7 +190,6 @@ DatasetDict = {
     'mnist': CustomMNIST, 
     'fashion': CustomFashionMNIST,
     'cifar10': CustomCIFAR10, 
-    'cifar100': torchvision.datasets.CIFAR100, 
     'emnist': CustomEMNIST,
     'tinyimage': CustomTinyImageNet,
     'mnistm': CustomMNISTM,

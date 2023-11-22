@@ -64,7 +64,7 @@ class FedAvgServer(object):
         self.file_midname = f"{self.num_client}_{self.args.partition}_{self.args.join_ratio}_{self.model_name}_{self.data_name}_{self.args.global_round}"
         logfile = log_dir + self.algo_name + '//' + self.file_midname + '.log'
         if not os.path.exists(os.path.dirname(logfile)):
-            os.mkdir(log_dir + self.algo_name)
+            os.makedirs(log_dir + self.algo_name)
         self.logger = Logger(logfile)
         self.logger.log(f"Experiment Arguments:\n {dict(self.args._get_kwargs())}")
         self.logger.log(f"client datasets: {self.datasets}")

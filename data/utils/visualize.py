@@ -1,4 +1,4 @@
-import json
+import os, json
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -31,12 +31,13 @@ def getinfo(dataset_name):
     return array, info
 
 def heatmap(data, labels, save_dir):
+    colormap = 'Greens'
     num_client, num_class = data.shape
     x = np.arange(num_client)
     y = np.arange(num_class)
     
     fig, ax = plt.subplots(figsize=(12, 8))
-    im = ax.imshow(data.T, cmap='Blues', aspect='auto') # auto is important incase class is too much
+    im = ax.imshow(data.T, cmap=colormap, aspect='auto') # auto is important incase class is too much
 
     ax.set_xlabel('Client ID')
     ax.set_ylabel('Number of samples')
@@ -53,9 +54,10 @@ def heatmap(data, labels, save_dir):
     cbar = ax.figure.colorbar(im, ax=ax)
     cbar.ax.set_ylabel('Count', rotation=-90, va='bottom')
 
-    plt.tight_layout()
+    # plt.tight_layout()
 
     plt.savefig(save_dir)
+    plt.close()
 
 def histogram(data, labels, save_dir):
     num_client, num_class = data.shape
@@ -66,20 +68,23 @@ def histogram(data, labels, save_dir):
     # ax.get_figure().set_size_inches(12, 8)
     bar_width = 0.5
 
-    cmap = plt.get_cmap('tab10')
+    cmap = plt.get_cmap('tab20')
     for i in range(num_class):
         ax.bar(x, data[:, i], bar_width, label=labels[i], color=cmap(i % 10), bottom=np.sum(data[:, :i], axis=1))
-    ax.bar(len(x), 0, bar_width)
+    ax.bar(len(x), 0, bar_width) # to make space for legend
 
     ax.set_xlabel('Client ID')
     ax.set_ylabel('Number of samples')
     ax.set_title('Display Label Distribution on Different Clients')
     ax.set_xticks(x)
     ax.set_xticklabels(["%d" % (i + 1) for i in range(num_client)])
+    max_height = np.max(np.sum(data, axis=1))
+    ax.set_ylim(0, max_height * 1.05)
     ax.legend(loc="upper right")
 
-    plt.tight_layout()
+    # plt.tight_layout()
     plt.savefig(save_dir)
+    plt.close()
 
 def scatter(data, labels, save_dir):
     num_client, num_class = data.shape
@@ -107,11 +112,16 @@ def scatter(data, labels, save_dir):
     cbar.ax.set_ylabel('Count', rotation=-90, va='bottom')
 
     plt.savefig(save_dir)
+    plt.close()
 
 def draw_distribution(dataset_name, method):
+    base = f"results/figures/distribution/{dataset_name}/"
+    if not os.path.exists(base):
+        os.makedirs(base)
+
     data, info = getinfo(dataset_name)
     labels = info['labels']
-    output_name = f"results/figures/{info['fullname']}_{info['num_client']}_{info['partition']}_{method}.png"
+    output_name = base + f"{info['fullname']}_{info['num_client']}_{info['partition']}_{method}.png"
 
     if method == 'hist':
         histogram(data, labels, output_name)
@@ -121,6 +131,10 @@ def draw_distribution(dataset_name, method):
         scatter(data, labels, output_name)
 
 def draw_data_sample(dataset_name):
+    base = f"results/figures/sample/"
+    if not os.path.exists(base):
+        os.makedirs(base)
+    
     dataset = DatasetDict[dataset_name](transform=None)
     plt.figure(figsize=(20, 10))
     size = 20
@@ -133,4 +147,5 @@ def draw_data_sample(dataset_name):
         plt.imshow(dataset.data[random_indices[i]] / 255, cmap=plt.cm.binary)
         #plt.imshow(train_images[i].squeeze(), cmap=plt.cm.binary)
         plt.xlabel(dataset.classes[dataset.targets[random_indices[i]]])
-    plt.savefig(f'results/figures/{type(dataset).__name__[6:]}.png')
+    plt.savefig(base + f'{type(dataset).__name__[6:]}.png')
+    plt.close()

@@ -7,13 +7,12 @@ if __name__ == "__main__":
     fix_random_seed(42)
 
     algorithm = 'fedavg'
-    datasets = ['mnist', 'fashion', 'mnistm', 'cifar10']
+    datasets = ['mnist']
     models = ['resnet18']
     args = ARG_DICT[algorithm].parse_args()
     for dataset in datasets:
-        # partition_data(dataset, args, draw=True)
-        draw_data_sample(dataset)
-        draw_distribution(dataset, 'hist')
+        partition_data(dataset, args, draw=True)
+        draw_distribution(dataset, 'dot')
   
     # server = ALGO_DICT[algorithm](datasets, models, args)
     # server.train()

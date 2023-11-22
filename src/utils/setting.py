@@ -13,7 +13,7 @@ log_dir = save_base + 'logs/'
 
 def get_argpaser():
     parser = ArgumentParser()
-    parser.add_argument('-n', '--num_client', type=int, default=20)
+    parser.add_argument('-n', '--num_client', type=int, default=10)
     parser.add_argument('--balance', type=int, default=1) # actually only impl pat imbalance
     parser.add_argument('--partition', type=str, choices=['iid', 'pat', 'dir', 'mix', 'rad', 'srd'], default='dir')
     parser.add_argument('-a', '--alpha', type=float, default=0.8)
